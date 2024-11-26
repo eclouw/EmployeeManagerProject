@@ -13,7 +13,8 @@ const pgData = new Pool({
 
 });
 
-app.get('/data', async (request, result) => {
+//Get all the roles from the database
+app.get('/get/roles', async (request, result) => {
     try {
         const query = 'SELECT * from public.roles';
         const res = await pgData.query(query);
@@ -25,6 +26,20 @@ app.get('/data', async (request, result) => {
     }
 });
 
+//get all the employees from the database
+app.get('/get/employees', async (request, result) =>{
+    try {
+        const query = 'SELECT * from public.employees';
+        const res = await pgData.query(query);
+
+        result.json(res.rows);
+    }catch (error) {
+        console.error('Error executng query:', error);
+        result.status(500).json({error: 'Error with query'});
+    }
+})
+
+//start server
 app.listen(PORT, () =>{
     console.log('Server is up');
 });
