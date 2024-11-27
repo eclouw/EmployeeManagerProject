@@ -16,7 +16,7 @@ const getData = async(table)=>{
     const fetchData=async(command)=>{
         const dataResponse = await axios.get(command);
 
-        console.log(dataResponse.data)
+        
         return dataResponse.data;
     }
     
