@@ -1,8 +1,15 @@
 const express = require('express');
 const {Pool} = require('pg');
+const cors = require('cors');
 
 const app = express();
-const PORT = 3000;
+const PORT = 5000;
+
+require('dotenv').config();
+
+app.use(cors({
+    origin: 'http://localhost:3000',
+}));
 
 const pgData = new Pool({
     user: process.env.DB_USERNAME,
@@ -38,6 +45,8 @@ app.get('/get/employees', async (request, result) =>{
         result.status(500).json({error: 'Error with query'});
     }
 })
+
+
 
 //start server
 app.listen(PORT, () =>{
