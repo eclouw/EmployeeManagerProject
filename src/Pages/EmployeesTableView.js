@@ -9,7 +9,7 @@ import Col from 'react-bootstrap/Col';
 import { useTheme } from '@table-library/react-table-library/theme';
 import { getTheme } from '@table-library/react-table-library/baseline';
 import getData from '../Components/getData';
-import axios from "react-axios";
+import axios from "axios";
 import { useState } from 'react';
 import { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -94,10 +94,23 @@ function EmployeesTableView(){
       employee.first_name = document.getElementById('input_first_name').value;
       employee.last_name = document.getElementById('input_last_name').value;
       employee.email = document.getElementById('input_email').value;
-      
+
       employees[index] = employee;
+
+      sendData(employee)
+      console.log(employee);
       
       setTableData({nodes: employees});
+    }
+
+    //TEMP FUNCTION TO TEST IF SENDING TO BACKEND WORKS
+    const sendData = async(data) =>{
+      try{
+        const response = await axios.post('http://localhost:5000/api/employee/edit/submit', data);
+        console.log(response.data);
+      }catch (error){
+        console.log('error sending data', error);
+      }
     }
 
     const data = tableData;
