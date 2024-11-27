@@ -94,6 +94,7 @@ function EmployeesTableView(){
       employee.first_name = document.getElementById('input_first_name').value;
       employee.last_name = document.getElementById('input_last_name').value;
       employee.email = document.getElementById('input_email').value;
+      
       employees[index] = employee;
       
       setTableData({nodes: employees});
