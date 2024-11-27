@@ -1,4 +1,7 @@
 import {Table, Header, HeaderRow, Body, Row, HeaderCell, Cell} from '@table-library/react-table-library/table';
+import {HeaderCellSelect, CellSelect, SelectClickTypes, SelectTypes, useRowSelect} from "@table-library/react-table-library/select";
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 import { useTheme } from '@table-library/react-table-library/theme';
 import { getTheme } from '@table-library/react-table-library/baseline';
 import getData from '../Components/getData';
@@ -10,6 +13,7 @@ function EmployeesTableView(){
     const [employeeData, setEmployeeData] = useState([]);
     const [loadingEmployeeData, setLoadingEmployeeData] = useState(true);
     const [tableData, setTableData] = useState({nodes : []})
+    const [selectedEmployee, setSelectedEmployee] = useState([]);
     
       
       //Get Employee Data
@@ -26,15 +30,16 @@ function EmployeesTableView(){
       //UseEffect for when employeeData is altered
       useEffect(()=>{
         if (employeeData.length > 0 && Array.isArray(employeeData)){
-          console.log("employee data is: " + employeeData.length)
-          setTableData({nodes: employeeData})
-          setLoadingEmployeeData(false);
+          const mappedData = employeeData.map((employee) => ({
+            ...employee,
+            id: employee.emp_number, //map emp_number to id to allow for selection in the table
+        }));
+        setTableData({ nodes: mappedData });
+        setLoadingEmployeeData(false);
         }
       }, [employeeData])
 
-      useEffect(()=>{
-        console.log("tabledata",tableData)
-      }, [tableData])
+
 
       //Create a table based on employee data
       const COLUMNS=[
@@ -53,13 +58,39 @@ function EmployeesTableView(){
     //table theme
     const theme = useTheme(getTheme());
 
+    function onselectionchange(action, state){
+      console.log("Action:", action);
+      console.log("Selection State:", state);
+      console.log(tableData)
+      findSelectedEmployee(state.id)
+      
+    }
+
+    function findSelectedEmployee(id){
+      setSelectedEmployee(
+        tableData.nodes.find((item)=>item.emp_number === id)
+      )
+    }
+
+
+    
+
+    const data = tableData;
+
+    const sel = useRowSelect(data, {
+      onChange: onselectionchange,
+      selectAllRows: false,
+    }, [tableData, loadingEmployeeData])
+
+    
+
     return (
     <div className='EmployeesTable'>
-        {loadingEmployeeData && tableData.length===0 ?(
+        {loadingEmployeeData || tableData.nodes.length===0 ?(
           <p>loading</p>
         ):(
           <>
-          <Table data={tableData} theme={theme}>
+          <Table data={data} theme={theme} select={sel}>
             {
               (tableList)=>(
                 <>
@@ -93,7 +124,7 @@ function EmployeesTableView(){
                 </Header>
                 <Body>
                   {tableList.map((item)=>(
-                    <Row key={item.emp_number} item={item}>
+                    <Row key={item.emp_number} item={item} id={item.emp_number}>
                       <Cell>{item.emp_number}</Cell>
                       <Cell>{item.first_name}</Cell>
                       <Cell>{item.last_name}</Cell>
@@ -112,8 +143,12 @@ function EmployeesTableView(){
               )
             }
           </Table>
+          <p>{selectedEmployee.first_name}</p>
           </>
         )}
+        <div>
+        
+        </div>
     </div>
     );
 }
