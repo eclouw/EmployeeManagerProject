@@ -1,8 +1,15 @@
 const express = require('express');
 const {Pool} = require('pg');
+const cors = require('cors');
 
 const app = express();
-const PORT = 3000;
+const PORT = 5000;
+
+require('dotenv').config();
+
+app.use(cors({
+    origin: 'http://localhost:3000',
+}));
 
 const pgData = new Pool({
     user: process.env.DB_USERNAME,
@@ -29,7 +36,7 @@ app.get('/get/roles', async (request, result) => {
 //get all the employees from the database
 app.get('/get/employees', async (request, result) =>{
     try {
-        const query = 'SELECT * from public.employees';
+        const query = "SELECT e.*,r.role_name, CONCAT(m.first_name, ' ', m.last_name) AS manager_name FROM public.employees e JOIN roles r ON e.emp_role=r.id LEFT JOIN employees m ON e.line_manager = m.emp_number";
         const res = await pgData.query(query);
 
         result.json(res.rows);
@@ -38,6 +45,8 @@ app.get('/get/employees', async (request, result) =>{
         result.status(500).json({error: 'Error with query'});
     }
 })
+
+
 
 //start server
 app.listen(PORT, () =>{
