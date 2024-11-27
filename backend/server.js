@@ -36,7 +36,7 @@ app.get('/get/roles', async (request, result) => {
 //get all the employees from the database
 app.get('/get/employees', async (request, result) =>{
     try {
-        const query = 'SELECT * from public.employees';
+        const query = 'SELECT *, roles.role_name FROM public.employees JOIN roles ON employees.emp_role=roles.id';
         const res = await pgData.query(query);
 
         result.json(res.rows);

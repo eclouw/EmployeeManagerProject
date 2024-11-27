@@ -97,7 +97,7 @@ function EmployeesTableView(){
                       <Cell>{item.emp_number}</Cell>
                       <Cell>{item.first_name}</Cell>
                       <Cell>{item.last_name}</Cell>
-                      <Cell>{item.emp_role}</Cell>
+                      <Cell>{item.role_name}</Cell>
                       <Cell>{item.line_manager}</Cell>
                       <Cell>{item.salary}</Cell>
                       <Cell>{item.email}</Cell>
