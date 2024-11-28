@@ -77,6 +77,7 @@ function EmployeesTableView(){
       employee.role_name = updateRoleName(document.getElementById('input_role').value);
       employee.line_manager = newLineManager.emp_number;
       employee.manager_name = newLineManager.first_name + ' ' + newLineManager.last_name;
+      employee.salary = document.getElementById('input_salary').value;
       employees[index] = employee;
 
       upDateData(employee)

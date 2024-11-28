@@ -52,7 +52,7 @@ app.get('/get/employees', async (request, result) =>{
 //Update employee first name, last name, and email
 app.post('/api/employee/edit/submit', async (req, res)=>{
     console.log('Got data');
-    const {first_name, last_name, email, emp_number, emp_role, line_manager} = req.body;
+    const {first_name, last_name, email, emp_number, emp_role, line_manager, salary} = req.body;
     console.log('Receieved first name:', first_name)
     console.log('Recieved last name', last_name)
 
@@ -62,8 +62,8 @@ app.post('/api/employee/edit/submit', async (req, res)=>{
     //update the first name, last name, and email
     //TODO add updating all of the details, this is currently just for testing purposes
     try{
-        const query = "UPDATE public.employees SET first_name = $1, last_name = $2, email = $3, emp_role = $5, line_manager = $6 WHERE emp_number = $4";
-        const queryResult = await pgData.query(query, [first_name, last_name, email, emp_number, emp_role, line_manager]);
+        const query = "UPDATE public.employees SET first_name = $1, last_name = $2, email = $3, emp_role = $5, line_manager = $6, salary = $7 WHERE emp_number = $4";
+        const queryResult = await pgData.query(query, [first_name, last_name, email, emp_number, emp_role, line_manager, salary]);
         console.log(queryResult);
     }catch (error) {
         console.error('Error executng query:', error);
