@@ -1,8 +1,24 @@
 import Container from 'react-bootstrap/Container';
 import {default as Brow} from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { useEffect, useState } from 'react';
 
 function EmployeeEditingForm({selectedEmployee, onSubmit}){
+    
+    //States for the currently selected employee details
+    const [inputEmployeeFirstName, setInputEmployeeFirstName] = useState('');
+    const [inputEmployeeLastName, setInputEmployeeLastName] = useState('');
+    const [inputEmployeeEmail, setInputEmployeeEmail] = useState('');
+    const [inputEmployeeSalary, setInputEmployeeSalary] = useState('');
+
+    useEffect(()=>{
+        if (selectedEmployee){
+            setInputEmployeeFirstName(selectedEmployee.first_name);
+            setInputEmployeeLastName(selectedEmployee.last_name);
+            setInputEmployeeEmail(selectedEmployee.email);
+            setInputEmployeeSalary(selectedEmployee.salary);
+        }
+    }, [selectedEmployee])
 
     return(
         <div>
@@ -10,17 +26,17 @@ function EmployeeEditingForm({selectedEmployee, onSubmit}){
             <Brow>
               <Col>
                 <p>First Name 
-                <input type="text" defaultValue={selectedEmployee.first_name} id="input_first_name"/>
+                <input type="text" value={inputEmployeeFirstName} onChange={(e)=> setInputEmployeeFirstName(e.target.value)} id="input_first_name"/>
                 </p>
               </Col>
               <Col>
                 <p>Last Name 
-                <input type="text" defaultValue={selectedEmployee.last_name} id="input_last_name"/>
+                <input type="text" value={inputEmployeeLastName} onChange={(e)=>setInputEmployeeLastName(e.target.value)} id="input_last_name"/>
                 </p>
               </Col>
               <Col>
                 <p>Email 
-                <input type="text" defaultValue={selectedEmployee.email} id="input_email"/>
+                <input type="text" value={inputEmployeeEmail} onChange={(e)=>setInputEmployeeEmail(e.target.value)} id="input_email"/>
                 </p>
               </Col>
             </Brow>
@@ -32,7 +48,7 @@ function EmployeeEditingForm({selectedEmployee, onSubmit}){
               </Col>
               <Col>
                 <p>Salary
-                <input type="text" defaultValue={selectedEmployee.salary}/>
+                <input type="text" value={inputEmployeeSalary} onChange={(e)=>setInputEmployeeSalary(e.target.value)} id="input_salary"/>
                 </p>
               </Col>
               <Col>

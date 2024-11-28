@@ -26,9 +26,7 @@ function EmployeesTableView(){
 
     //States for the currently selected employee details
     const [inputEmployeeFirstName, setInputEmployeeFirstName] = useState('');
-    
-    
-      
+
       //Get Employee Data
       useEffect(() => {
         const fetchEmployeeData = async()=>{
@@ -53,13 +51,12 @@ function EmployeesTableView(){
       }, [employeeData])
 
 
-
+    //Get the employee that is selected in the table
     const getSelectedEmployee = (employee) =>{
-      console.log("selected",employee);
-      console.log("fires");
       setSelectedEmployee(employee);
     }
 
+    //Update employee details
     function updateEmployeeDetails(){
       const index = tableData.nodes.findIndex((item)=> item.id === selectedEmployee.id);
       
