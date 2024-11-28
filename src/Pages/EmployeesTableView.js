@@ -66,8 +66,10 @@ function EmployeesTableView(){
       employee.first_name = document.getElementById('input_first_name').value;
       employee.last_name = document.getElementById('input_last_name').value;
       employee.email = document.getElementById('input_email').value;
-      //BELOW STILL NEED TO BE IMPLEMENTED FOR UPDATING ON THE BACKEND
-      employee.role = document.getElementById('input_role').value;
+      //BELOW STILL NEED TO BE TESTED
+      employee.emp_role = document.getElementById('input_role').value;
+      employee.role_name = updateRoleName(document.getElementById('input_role').value);
+      console.log("updated role", document.getElementById('input_role').value)
 
       employees[index] = employee;
 
@@ -75,6 +77,11 @@ function EmployeesTableView(){
       console.log(employee);
       
       setTableData({nodes: employees});
+    }
+
+    function updateRoleName(id){
+      const newRole = roleData.find((item)=> item.id == id);
+      return newRole.role_name;
     }
 
     //TEMP FUNCTION TO TEST IF SENDING TO BACKEND WORKS
@@ -96,7 +103,7 @@ function EmployeesTableView(){
           <Card>
             <Card.Body>
               <Card.Title>Employees</Card.Title>
-            <EmployeesTable data = {tableData} onSelection={getSelectedEmployee}/>
+            <EmployeesTable data = {tableData} onSelection={getSelectedEmployee} roles={roleData}/>
             </Card.Body>
           </Card>
           <Card>

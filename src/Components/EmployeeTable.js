@@ -3,10 +3,12 @@ import {HeaderCellSelect, CellSelect, SelectClickTypes, SelectTypes, useRowSelec
 import { usePagination } from "@table-library/react-table-library/pagination";
 import { useTheme } from '@table-library/react-table-library/theme';
 import { getTheme } from '@table-library/react-table-library/baseline';
+import { useState } from 'react';
 
-function EmployeeTable({data,  onSelection}){
+function EmployeeTable({data,  onSelection, roles}){
     data = data;
-    
+
+
     //Table Pagination
     const LIMIT = 5;
     console.log("data", data);
@@ -46,6 +48,7 @@ function EmployeeTable({data,  onSelection}){
     const employee = data.nodes.find((item)=>item.emp_number === id)
     if (onSelection){
         onSelection(employee);
+        
     }
     
     
@@ -55,6 +58,7 @@ function EmployeeTable({data,  onSelection}){
     onChange: onselectionchange,
     selectAllRows: false,
   })
+
 
   return(
     <>
