@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import EmployeesTable from '../Components/EmployeeTable';
 import EmployeeEditingForm from '../Components/EmployeeEditingForm';
+import Card from 'react-bootstrap/Card';
 
 
 function EmployeesTableView(){
@@ -86,9 +87,18 @@ function EmployeesTableView(){
           <Spinner animation='border'/>
         ):(
           <>
-          <EmployeesTable data = {tableData} onSelection={getSelectedEmployee}/>
-          <EmployeeEditingForm selectedEmployee={selectedEmployee} onSubmit={updateEmployeeDetails}/>
-
+          <Card>
+            <Card.Body>
+              <Card.Title>Employees</Card.Title>
+            <EmployeesTable data = {tableData} onSelection={getSelectedEmployee}/>
+            </Card.Body>
+          </Card>
+          <Card>
+            <Card.Body>
+            <Card.Title>Employee Editor</Card.Title>
+            <EmployeeEditingForm selectedEmployee={selectedEmployee} onSubmit={updateEmployeeDetails}/>
+            </Card.Body>
+          </Card>
           <p>Currently Selected Employee with ID:{selectedEmployee.emp_number}</p>
           
           </>
