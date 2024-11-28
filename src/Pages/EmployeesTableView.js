@@ -24,8 +24,6 @@ function EmployeesTableView(){
     const [tableData, setTableData] = useState({nodes : []})
     const [selectedEmployee, setSelectedEmployee] = useState([]);
 
-    //States for the currently selected employee details
-    const [inputEmployeeFirstName, setInputEmployeeFirstName] = useState('');
 
       //Get Employee Data
       useEffect(() => {
