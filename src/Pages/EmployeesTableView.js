@@ -15,6 +15,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import EmployeesTable from '../Components/EmployeeTable';
+import EmployeeEditingForm from '../Components/EmployeeEditingForm';
 
 
 function EmployeesTableView(){
@@ -101,64 +102,10 @@ function EmployeesTableView(){
         ):(
           <>
           <EmployeesTable data = {tableData} onSelection={getSelectedEmployee}/>
-          
+          <EmployeeEditingForm selectedEmployee={selectedEmployee} onSubmit={updateEmployeeDetails}/>
 
           <p>Currently Selected Employee with ID:{selectedEmployee.emp_number}</p>
-          <div>
-          <Container>
-            <Brow>
-              <Col>
-                <p>First Name 
-                <input type="text" defaultValue={selectedEmployee.first_name} id="input_first_name"/>
-                </p>
-              </Col>
-              <Col>
-                <p>Last Name 
-                <input type="text" defaultValue={selectedEmployee.last_name} id="input_last_name"/>
-                </p>
-              </Col>
-              <Col>
-                <p>Email 
-                <input type="text" defaultValue={selectedEmployee.email} id="input_email"/>
-                </p>
-              </Col>
-            </Brow>
-            <Brow>
-              <Col>
-                <p>Role
-                <input type="text" defaultValue={selectedEmployee.role_name}/>
-                </p>
-              </Col>
-              <Col>
-                <p>Salary
-                <input type="text" defaultValue={selectedEmployee.salary}/>
-                </p>
-              </Col>
-              <Col>
-                <p>Birth Date
-                <input type="text" defaultValue={selectedEmployee.birthdate}/>
-                </p>
-              </Col>
-            </Brow>
-            <Brow>
-            <Col>
-            <p>
-              Line Manager
-              <input type="text" defaultValue={selectedEmployee.manager_name}/>
-            </p>
-            </Col>
-            <Col>
-            Select Line Manager
-            </Col>
-            </Brow>
-            <Brow>
-            <button onClick={updateEmployeeDetails}>Submit Changes</button>
-            </Brow>
-          </Container>
-        </div>
-        <div>
           
-        </div>
           </>
         )}
         
