@@ -1,5 +1,6 @@
 import {Table, Header, HeaderRow, Body, Row, HeaderCell, Cell} from '@table-library/react-table-library/table';
 import {HeaderCellSelect, CellSelect, SelectClickTypes, SelectTypes, useRowSelect} from "@table-library/react-table-library/select";
+import { usePagination } from "@table-library/react-table-library/pagination";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Spinner from 'react-bootstrap/Spinner';
@@ -50,18 +51,27 @@ function EmployeesTableView(){
 
 
 
-      //Create a table based on employee data
-      const COLUMNS=[
-       {
-        label:'FirstName',
-        renderCell:(item)=>item.first_name
-       },
-       {
-        label:'LastName',
-        renderCell:(item)=>item.last_name
-       },
+    //Table Pagination
+    const LIMIT = 5;
 
-      ]
+    const pagination = usePagination(tableData,{
+      state:{
+        page: 0,
+        size: LIMIT,
+      },
+      onChange: onPaginationChange,
+    },
+    {
+      isServer: false,
+    }
+  )
+
+  function onPaginationChange(action, state){
+    new DocumentFragment({
+      offset: state.page * LIMIT,
+      limit: LIMIT
+    });
+  }
 
       
     //table theme
@@ -128,7 +138,7 @@ function EmployeesTableView(){
           <Spinner animation='border'/>
         ):(
           <>
-          <Table data={data} theme={theme} select={sel}>
+          <Table data={data} theme={theme} select={sel} pagination={pagination}>
             {
               (tableList)=>(
                 <>
@@ -181,6 +191,24 @@ function EmployeesTableView(){
               )
             }
           </Table>
+          <div style={{
+              display:"flex",
+              justifyContent:"space-between",
+            }}
+            >
+          <span>Total Rows: {data.nodes.length}</span>
+          <span>Rows per page: {LIMIT}
+          
+          <button type="button" disabled={pagination.state.page === 0}
+          onClick={()=>pagination.fns.onSetPage(0)}>{"|<"}</button>
+          <button type="button" disabled={pagination.state.page === 0}
+          onClick={()=>pagination.fns.onSetPage(pagination.state.page -1)}>{"<"}</button>
+          <button type="button" disabled={pagination.state.page + 1 === Math.ceil(data.nodes.length/LIMIT)}
+          onClick={()=>pagination.fns.onSetPage(pagination.state.page+1)}>{">"}</button>
+          <button type="button" disabled={pagination.state.page +1 === Math.ceil(data.nodes.length/LIMIT)}
+          onClick={()=>pagination.fns.onSetPage(Math.ceil(data.nodes.length/LIMIT) - 1)}>{">|"}</button></span></div>
+          
+
           <p>Currently Selected Employee with ID:{selectedEmployee.emp_number}</p>
           <div>
           <Container>
