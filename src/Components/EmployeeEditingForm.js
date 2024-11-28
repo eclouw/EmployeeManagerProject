@@ -2,8 +2,10 @@ import Container from 'react-bootstrap/Container';
 import {default as Brow} from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useEffect, useState } from 'react';
+import Select from 'react-select';
+import React from 'react';
 
-function EmployeeEditingForm({selectedEmployee, onSubmit, roles}){
+function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees}){
     
     //States for the currently selected employee details
     const [inputEmployeeFirstName, setInputEmployeeFirstName] = useState('');
@@ -11,6 +13,8 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles}){
     const [inputEmployeeEmail, setInputEmployeeEmail] = useState('');
     const [inputEmployeeSalary, setInputEmployeeSalary] = useState('');
     const [inputEmployeeRole, setInputEmployeeRole] = useState(0);
+    const [inputEmployeeManager, setInputEmployeeManager] = useState([]);
+    console.log(roles);
 
     useEffect(()=>{
         if (selectedEmployee){
@@ -19,8 +23,18 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles}){
             setInputEmployeeEmail(selectedEmployee.email);
             setInputEmployeeSalary(selectedEmployee.salary);
             setInputEmployeeRole(selectedEmployee.emp_role)
+            //Set the employee line manager
+            const lManager = employees.find((item)=> item.emp_number == selectedEmployee.line_manager);
+            setInputEmployeeManager(lManager);
+            
         }
     }, [selectedEmployee])
+
+    function onSendData(){
+      onSubmit(inputEmployeeManager);
+    }
+
+    console.log("frome employee table", employees);
 
     return(
         <div>
@@ -68,7 +82,7 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles}){
             <Col>
             <p>
               Line Manager
-              <input type="text" defaultValue={selectedEmployee.manager_name}/>
+              <Select options={employees} value={inputEmployeeManager} onChange={(e)=>setInputEmployeeManager(e)} id="input_line_manager" selected={inputEmployeeManager}/>
             </p>
             </Col>
             <Col>
@@ -76,7 +90,7 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles}){
             </Col>
             </Brow>
             <Brow>
-            <button onClick={onSubmit}>Submit Changes</button>
+            <button onClick={onSendData}>Submit Changes</button>
             </Brow>
           </Container>
         </div>

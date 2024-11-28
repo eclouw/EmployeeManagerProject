@@ -38,15 +38,22 @@ function EmployeesTableView(){
 
       //UseEffect for when employeeData is altered
       useEffect(()=>{
+        
         if (employeeData.length > 0 && Array.isArray(employeeData)){
           const mappedData = employeeData.map((employee) => ({
             ...employee,
             id: employee.emp_number, //map emp_number to id to allow for selection in the table
+            value: employee.emp_number,
+            label: employee.first_name + ' ' + employee.last_name,
         }));
         setTableData({ nodes: mappedData });
         setLoadingEmployeeData(false);
         }
       }, [employeeData])
+
+      //THIS CODE AND THE OTHER ONE FOR FETCHING THE ROLES HAS ISSUES, IF BOTH ARE ACTIVE THEN RERENDERS HAPPEN TO THE TABLE FOR INFINITEY, NEED TO FIX THIS OR REMOVE
+      //THE NEED FOR THE BELOW CODE
+      
 
 
     //Get the employee that is selected in the table
@@ -55,7 +62,7 @@ function EmployeesTableView(){
     }
 
     //Update employee details
-    function updateEmployeeDetails(){
+    function updateEmployeeDetails(newLineManager){
       const index = tableData.nodes.findIndex((item)=> item.id === selectedEmployee.id);
       
       let employees = [...tableData.nodes];
@@ -66,11 +73,10 @@ function EmployeesTableView(){
       employee.first_name = document.getElementById('input_first_name').value;
       employee.last_name = document.getElementById('input_last_name').value;
       employee.email = document.getElementById('input_email').value;
-      //BELOW STILL NEED TO BE TESTED
       employee.emp_role = document.getElementById('input_role').value;
       employee.role_name = updateRoleName(document.getElementById('input_role').value);
-      console.log("updated role", document.getElementById('input_role').value)
-
+      employee.line_manager = newLineManager.emp_number;
+      employee.manager_name = newLineManager.first_name + ' ' + newLineManager.last_name;
       employees[index] = employee;
 
       upDateData(employee)
@@ -103,14 +109,14 @@ function EmployeesTableView(){
           <Card>
             <Card.Body>
               <Card.Title>Employees</Card.Title>
-            <EmployeesTable data = {tableData} onSelection={getSelectedEmployee} roles={roleData}/>
+            <EmployeesTable data = {tableData} onSelection={getSelectedEmployee}/>
             </Card.Body>
           </Card>
           <Card>
             <Card.Body>
             <Card.Title>Employee Editor</Card.Title>
             <Card.Subtitle>Currently Selected Employee with ID:{selectedEmployee.emp_number}</Card.Subtitle>
-            <EmployeeEditingForm selectedEmployee={selectedEmployee} onSubmit={updateEmployeeDetails} roles={roleData}/>
+            <EmployeeEditingForm selectedEmployee={selectedEmployee} onSubmit={updateEmployeeDetails} roles={roleData} employees={tableData.nodes}/>
             </Card.Body>
           </Card>
           

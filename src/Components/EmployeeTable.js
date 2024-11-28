@@ -3,10 +3,9 @@ import {HeaderCellSelect, CellSelect, SelectClickTypes, SelectTypes, useRowSelec
 import { usePagination } from "@table-library/react-table-library/pagination";
 import { useTheme } from '@table-library/react-table-library/theme';
 import { getTheme } from '@table-library/react-table-library/baseline';
-import { useState } from 'react';
 
 function EmployeeTable({data,  onSelection, roles}){
-    data = data;
+    
 
 
     //Table Pagination
