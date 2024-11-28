@@ -1,11 +1,13 @@
 import {Table, Header, HeaderRow, Body, Row, HeaderCell, Cell} from '@table-library/react-table-library/table';
 import {HeaderCellSelect, CellSelect, SelectClickTypes, SelectTypes, useRowSelect} from "@table-library/react-table-library/select";
+import {useSort, HeaderCellSort, SortIconPositions, SortToggleType} from "@table-library/react-table-library/sort";
 import { usePagination } from "@table-library/react-table-library/pagination";
 import { useTheme } from '@table-library/react-table-library/theme';
 import { getTheme } from '@table-library/react-table-library/baseline';
+import React from 'react';
 
 function EmployeeTable({data,  onSelection, roles}){
-    
+    const[sortedData, setSortedData] = React.useState(data);
 
 
     //Table Pagination
@@ -33,6 +35,7 @@ function EmployeeTable({data,  onSelection, roles}){
   //table theme
   const theme = useTheme(getTheme());
 
+  //When an item in the table is selected
   function onselectionchange(action, state){
     console.log("Action:", action);
     console.log("Selection State:", state);
@@ -53,23 +56,50 @@ function EmployeeTable({data,  onSelection, roles}){
     
   }
 
+  //enable selection from the table
   const sel = useRowSelect(data, {
     onChange: onselectionchange,
     selectAllRows: false,
   })
 
+  function sortByEmployeeNumber(reversed){
+    const sorted = [...data.nodes].sort((a,b) => a.emp_number - b.emp_number);
+    setSortedData({nodes: sorted});
+    console.log(sortedData);
+  }
+
+  //enable sorting for the table
+  function onSortChange(action, state){
+    console.log(action, state);
+    if (state.sortKey == 'emp_number'){
+        sortByEmployeeNumber(state.reverse);
+    }
+  }
+  const sort = useSort(data, {
+    state:{
+        sortKey: "emp_number",
+        reverse:false,
+    },
+    onChange: onSortChange,
+  },
+    {
+        sortFns:{
+            EMP_NUMBER: (array) => array.sort((a, b) => (a.nodes || []).length - (b.nodes || []).length),
+        }
+    })
+
 
   return(
     <>
-          <Table data={data} theme={theme} select={sel} pagination={pagination}>
+          <Table data={sortedData} theme={theme} select={sel} pagination={pagination} sort={sort}>
             {
               (tableList)=>(
                 <>
                 <Header>
                   <HeaderRow>
-                  <HeaderCell>
+                  <HeaderCellSort sortKey="emp_number">
                       Employee Number
-                    </HeaderCell>
+                    </HeaderCellSort>
                     <HeaderCell>
                       First Name
                     </HeaderCell>
