@@ -14,6 +14,7 @@ import axios from "axios";
 import { useState } from 'react';
 import { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import EmployeesTable from '../Components/EmployeeTable';
 
 
 function EmployeesTableView(){
@@ -24,6 +25,7 @@ function EmployeesTableView(){
 
     //States for the currently selected employee details
     const [inputEmployeeFirstName, setInputEmployeeFirstName] = useState('');
+    
     
       
       //Get Employee Data
@@ -80,7 +82,7 @@ function EmployeesTableView(){
     function onselectionchange(action, state){
       console.log("Action:", action);
       console.log("Selection State:", state);
-      console.log(tableData)
+      console.log(data)
       findSelectedEmployee(state.id)
       
       
@@ -91,6 +93,12 @@ function EmployeesTableView(){
         tableData.nodes.find((item)=>item.emp_number === id)
       )
       
+    }
+
+    const getSelectedEmployee = (employee) =>{
+      console.log("selected",employee);
+      console.log("fires");
+      setSelectedEmployee(employee);
     }
 
     function updateEmployeeDetails(){
@@ -124,11 +132,7 @@ function EmployeesTableView(){
     }
 
     const data = tableData;
-
-    const sel = useRowSelect(data, {
-      onChange: onselectionchange,
-      selectAllRows: false,
-    }, [tableData, loadingEmployeeData])
+    
 
     
 
@@ -138,75 +142,7 @@ function EmployeesTableView(){
           <Spinner animation='border'/>
         ):(
           <>
-          <Table data={data} theme={theme} select={sel} pagination={pagination}>
-            {
-              (tableList)=>(
-                <>
-                <Header>
-                  <HeaderRow>
-                  <HeaderCell>
-                      Employee Number
-                    </HeaderCell>
-                    <HeaderCell>
-                      First Name
-                    </HeaderCell>
-                    <HeaderCell>
-                      Last Name
-                    </HeaderCell>
-                    <HeaderCell>
-                      Role
-                    </HeaderCell>
-                    <HeaderCell>
-                      Line Manager
-                    </HeaderCell>
-                    <HeaderCell>
-                      Salary
-                    </HeaderCell>
-                    <HeaderCell>
-                      Email
-                    </HeaderCell>
-                    <HeaderCell>
-                      Birth Date
-                    </HeaderCell>
-                  </HeaderRow>
-                </Header>
-                <Body>
-                  {tableList.map((item)=>(
-                    <Row key={item.emp_number} item={item} id={item.emp_number}>
-                      <Cell>{item.emp_number}</Cell>
-                      <Cell>{item.first_name}</Cell>
-                      <Cell>{item.last_name}</Cell>
-                      <Cell>{item.role_name}</Cell>
-                      <Cell>{item.manager_name}</Cell>
-                      <Cell>{item.salary}</Cell>
-                      <Cell>{item.email}</Cell>
-                      <Cell>
-                        {item.birthdate}
-                      </Cell>
-                    </Row>
-                    
-                  ))}
-                </Body>
-                </>
-              )
-            }
-          </Table>
-          <div style={{
-              display:"flex",
-              justifyContent:"space-between",
-            }}
-            >
-          <span>Total Rows: {data.nodes.length}</span>
-          <span>Rows per page: {LIMIT}
-          
-          <button type="button" disabled={pagination.state.page === 0}
-          onClick={()=>pagination.fns.onSetPage(0)}>{"|<"}</button>
-          <button type="button" disabled={pagination.state.page === 0}
-          onClick={()=>pagination.fns.onSetPage(pagination.state.page -1)}>{"<"}</button>
-          <button type="button" disabled={pagination.state.page + 1 === Math.ceil(data.nodes.length/LIMIT)}
-          onClick={()=>pagination.fns.onSetPage(pagination.state.page+1)}>{">"}</button>
-          <button type="button" disabled={pagination.state.page +1 === Math.ceil(data.nodes.length/LIMIT)}
-          onClick={()=>pagination.fns.onSetPage(Math.ceil(data.nodes.length/LIMIT) - 1)}>{">|"}</button></span></div>
+          <EmployeesTable data = {data} onSelection={getSelectedEmployee}/>
           
 
           <p>Currently Selected Employee with ID:{selectedEmployee.emp_number}</p>
@@ -258,9 +194,12 @@ function EmployeesTableView(){
             </Col>
             </Brow>
             <Brow>
-            <button onClick={updateEmployeeDetails}>Submit Changes</button>
+            <button onClick={()=>updateEmployeeDetails}>Submit Changes</button>
             </Brow>
           </Container>
+        </div>
+        <div>
+          
         </div>
           </>
         )}
