@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import EmployeesTable from '../Components/EmployeeTable';
 import EmployeeEditingForm from '../Components/EmployeeEditingForm';
 import Card from 'react-bootstrap/Card';
+import sendData from '../Components/sendData';
 
 
 function EmployeesTableView(){
@@ -60,20 +61,15 @@ function EmployeesTableView(){
 
       employees[index] = employee;
 
-      sendData(employee)
+      upDateData(employee)
       console.log(employee);
       
       setTableData({nodes: employees});
     }
 
     //TEMP FUNCTION TO TEST IF SENDING TO BACKEND WORKS
-    const sendData = async(data) =>{
-      try{
-        const response = await axios.post('http://localhost:5000/api/employee/edit/submit', data);
-        console.log(response.data);
-      }catch (error){
-        console.log('error sending data', error);
-      }
+    const upDateData = async(data) =>{
+      sendData(data, "employees");
     }
 
     const data = tableData;
@@ -96,10 +92,11 @@ function EmployeesTableView(){
           <Card>
             <Card.Body>
             <Card.Title>Employee Editor</Card.Title>
+            <Card.Subtitle>Currently Selected Employee with ID:{selectedEmployee.emp_number}</Card.Subtitle>
             <EmployeeEditingForm selectedEmployee={selectedEmployee} onSubmit={updateEmployeeDetails}/>
             </Card.Body>
           </Card>
-          <p>Currently Selected Employee with ID:{selectedEmployee.emp_number}</p>
+          
           
           </>
         )}
