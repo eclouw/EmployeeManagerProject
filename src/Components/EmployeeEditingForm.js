@@ -3,13 +3,14 @@ import {default as Brow} from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useEffect, useState } from 'react';
 
-function EmployeeEditingForm({selectedEmployee, onSubmit}){
+function EmployeeEditingForm({selectedEmployee, onSubmit, roles}){
     
     //States for the currently selected employee details
     const [inputEmployeeFirstName, setInputEmployeeFirstName] = useState('');
     const [inputEmployeeLastName, setInputEmployeeLastName] = useState('');
     const [inputEmployeeEmail, setInputEmployeeEmail] = useState('');
     const [inputEmployeeSalary, setInputEmployeeSalary] = useState('');
+    const [inputEmployeeRole, setInputEmployeeRole] = useState(0);
 
     useEffect(()=>{
         if (selectedEmployee){
@@ -17,6 +18,7 @@ function EmployeeEditingForm({selectedEmployee, onSubmit}){
             setInputEmployeeLastName(selectedEmployee.last_name);
             setInputEmployeeEmail(selectedEmployee.email);
             setInputEmployeeSalary(selectedEmployee.salary);
+            setInputEmployeeRole(selectedEmployee.emp_role)
         }
     }, [selectedEmployee])
 
@@ -43,7 +45,12 @@ function EmployeeEditingForm({selectedEmployee, onSubmit}){
             <Brow>
               <Col>
                 <p>Role
-                <input type="text" defaultValue={selectedEmployee.role_name}/>
+                <select value={inputEmployeeRole} id="input_role" onChange={(e)=>setInputEmployeeRole(e.target.value)}>
+                  {roles.map((role)=>(
+                    <option key={role.id} value={role.id}>{role.role_name}</option>
+                  ))}
+
+                </select>
                 </p>
               </Col>
               <Col>

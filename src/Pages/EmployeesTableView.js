@@ -15,6 +15,7 @@ function EmployeesTableView(){
     const [loadingEmployeeData, setLoadingEmployeeData] = useState(true);
     const [tableData, setTableData] = useState({nodes : []})
     const [selectedEmployee, setSelectedEmployee] = useState([]);
+    const [roleData, setRoleData] = useState([]);
 
 
       //Get Employee Data
@@ -25,7 +26,14 @@ function EmployeesTableView(){
           setEmployeeData(employees);
         }
 
+        const fetchRoleData = async()=>{
+          const roles = await getData("roles");
+          console.log("Fetched roles", roles);
+          setRoleData(roles);
+        }
+
         fetchEmployeeData();
+        fetchRoleData();
       }, [])
 
       //UseEffect for when employeeData is altered
@@ -58,6 +66,8 @@ function EmployeesTableView(){
       employee.first_name = document.getElementById('input_first_name').value;
       employee.last_name = document.getElementById('input_last_name').value;
       employee.email = document.getElementById('input_email').value;
+      //BELOW STILL NEED TO BE IMPLEMENTED FOR UPDATING ON THE BACKEND
+      employee.role = document.getElementById('input_role').value;
 
       employees[index] = employee;
 
@@ -93,7 +103,7 @@ function EmployeesTableView(){
             <Card.Body>
             <Card.Title>Employee Editor</Card.Title>
             <Card.Subtitle>Currently Selected Employee with ID:{selectedEmployee.emp_number}</Card.Subtitle>
-            <EmployeeEditingForm selectedEmployee={selectedEmployee} onSubmit={updateEmployeeDetails}/>
+            <EmployeeEditingForm selectedEmployee={selectedEmployee} onSubmit={updateEmployeeDetails} roles={roleData}/>
             </Card.Body>
           </Card>
           
