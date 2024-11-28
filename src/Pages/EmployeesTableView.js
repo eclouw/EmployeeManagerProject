@@ -53,48 +53,6 @@ function EmployeesTableView(){
 
 
 
-    //Table Pagination
-    const LIMIT = 5;
-
-    const pagination = usePagination(tableData,{
-      state:{
-        page: 0,
-        size: LIMIT,
-      },
-      onChange: onPaginationChange,
-    },
-    {
-      isServer: false,
-    }
-  )
-
-  function onPaginationChange(action, state){
-    new DocumentFragment({
-      offset: state.page * LIMIT,
-      limit: LIMIT
-    });
-  }
-
-      
-    //table theme
-    const theme = useTheme(getTheme());
-
-    function onselectionchange(action, state){
-      console.log("Action:", action);
-      console.log("Selection State:", state);
-      console.log(data)
-      findSelectedEmployee(state.id)
-      
-      
-    }
-
-    function findSelectedEmployee(id){
-      setSelectedEmployee(
-        tableData.nodes.find((item)=>item.emp_number === id)
-      )
-      
-    }
-
     const getSelectedEmployee = (employee) =>{
       console.log("selected",employee);
       console.log("fires");
@@ -142,7 +100,7 @@ function EmployeesTableView(){
           <Spinner animation='border'/>
         ):(
           <>
-          <EmployeesTable data = {data} onSelection={getSelectedEmployee}/>
+          <EmployeesTable data = {tableData} onSelection={getSelectedEmployee}/>
           
 
           <p>Currently Selected Employee with ID:{selectedEmployee.emp_number}</p>
@@ -194,7 +152,7 @@ function EmployeesTableView(){
             </Col>
             </Brow>
             <Brow>
-            <button onClick={()=>updateEmployeeDetails}>Submit Changes</button>
+            <button onClick={updateEmployeeDetails}>Submit Changes</button>
             </Brow>
           </Container>
         </div>
