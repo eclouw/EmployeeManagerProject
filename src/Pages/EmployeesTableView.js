@@ -1,14 +1,4 @@
-import {Table, Header, HeaderRow, Body, Row, HeaderCell, Cell} from '@table-library/react-table-library/table';
-import {HeaderCellSelect, CellSelect, SelectClickTypes, SelectTypes, useRowSelect} from "@table-library/react-table-library/select";
-import { usePagination } from "@table-library/react-table-library/pagination";
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 import Spinner from 'react-bootstrap/Spinner';
-import Container from 'react-bootstrap/Container';
-import {default as Brow} from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import { useTheme } from '@table-library/react-table-library/theme';
-import { getTheme } from '@table-library/react-table-library/baseline';
 import getData from '../Components/getData';
 import axios from "axios";
 import { useState } from 'react';
