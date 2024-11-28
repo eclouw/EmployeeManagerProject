@@ -62,17 +62,31 @@ function EmployeeTable({data,  onSelection, roles}){
     selectAllRows: false,
   })
 
-  function sortByEmployeeNumber(reversed){
-    const sorted = [...data.nodes].sort((a,b) => a.emp_number - b.emp_number);
-    setSortedData({nodes: sorted});
-    console.log(sortedData);
-  }
 
   //enable sorting for the table
   function onSortChange(action, state){
     console.log(action, state);
     if (state.sortKey == 'emp_number'){
-        sortByEmployeeNumber(state.reverse);
+        const sorted = [...data.nodes].sort((a,b) => a.emp_number - b.emp_number);
+        setSortedData({nodes: sorted});
+    }else if (state.sortKey == 'first_name'){
+        const sorted = [...data.nodes].sort((a,b) => a.first_name.localeCompare(b.first_name));
+        setSortedData({nodes: sorted});
+    }else if (state.sortKey == 'last_name'){
+        const sorted = [...data.nodes].sort((a,b) => a.last_name.localeCompare(b.last_name));
+        setSortedData({nodes: sorted});
+    }else if (state.sortKey == 'role_name'){
+        const sorted = [...data.nodes].sort((a,b) => a.role_name.localeCompare(b.role_name));
+        setSortedData({nodes: sorted});
+    }else if (state.sortKey == 'manager_name'){
+        const sorted = [...data.nodes].sort((a,b) => a.manager_name.localeCompare(b.manager_name));
+        setSortedData({nodes: sorted});
+    }else if (state.sortKey == 'salary'){
+        const sorted = [...data.nodes].sort((a,b) => a.salary - b.salary);
+        setSortedData({nodes: sorted});
+    }else if (state.sortKey == 'email'){
+        const sorted = [...data.nodes].sort((a,b) => a.email.localeCompare(b.email));
+        setSortedData({nodes: sorted});
     }
   }
   const sort = useSort(data, {
@@ -84,7 +98,7 @@ function EmployeeTable({data,  onSelection, roles}){
   },
     {
         sortFns:{
-            EMP_NUMBER: (array) => array.sort((a, b) => (a.nodes || []).length - (b.nodes || []).length),
+            emp_number: (array) => array.sort((a, b) => (a.nodes || []).length - (b.nodes || []).length),
         }
     })
 
@@ -100,24 +114,24 @@ function EmployeeTable({data,  onSelection, roles}){
                   <HeaderCellSort sortKey="emp_number">
                       Employee Number
                     </HeaderCellSort>
-                    <HeaderCell>
+                    <HeaderCellSort sortKey='first_name'>
                       First Name
-                    </HeaderCell>
-                    <HeaderCell>
+                    </HeaderCellSort>
+                    <HeaderCellSort sortKey='last_name'>
                       Last Name
-                    </HeaderCell>
-                    <HeaderCell>
+                    </HeaderCellSort>
+                    <HeaderCellSort sortKey="role_name">
                       Role
-                    </HeaderCell>
-                    <HeaderCell>
+                    </HeaderCellSort>
+                    <HeaderCellSort sortKey='manager_name'>
                       Line Manager
-                    </HeaderCell>
-                    <HeaderCell>
+                    </HeaderCellSort>
+                    <HeaderCellSort sortKey='salary'>
                       Salary
-                    </HeaderCell>
-                    <HeaderCell>
+                    </HeaderCellSort>
+                    <HeaderCellSort sortKey='email'>
                       Email
-                    </HeaderCell>
+                    </HeaderCellSort>
                     <HeaderCell>
                       Birth Date
                     </HeaderCell>
