@@ -52,8 +52,7 @@ function EmployeesTableView(){
         }
       }, [employeeData])
 
-      //THIS CODE AND THE OTHER ONE FOR FETCHING THE ROLES HAS ISSUES, IF BOTH ARE ACTIVE THEN RERENDERS HAPPEN TO THE TABLE FOR INFINITEY, NEED TO FIX THIS OR REMOVE
-      //THE NEED FOR THE BELOW CODE
+      
       
 
 
@@ -76,8 +75,11 @@ function EmployeesTableView(){
       employee.email = document.getElementById('input_email').value;
       employee.emp_role = document.getElementById('input_role').value;
       employee.role_name = updateRoleName(document.getElementById('input_role').value);
+
+      //update the line manager details
       employee.line_manager = newLineManager.emp_number;
       employee.manager_name = newLineManager.first_name + ' ' + newLineManager.last_name;
+
       employee.salary = document.getElementById('input_salary').value;
       employee.birthdate = document.getElementById('input_birthdate').value;
       employees[index] = employee;
