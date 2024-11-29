@@ -2,6 +2,7 @@ const express = require('express');
 const {Pool} = require('pg');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const crypto = require('crypto')
 
 const app = express();
 const PORT = 5000;
@@ -46,6 +47,25 @@ app.get('/get/employees', async (request, result) =>{
     }catch (error) {
         console.error('Error executng query:', error);
         result.status(500).json({error: 'Error with query'});
+    }
+})
+
+//Get employee profile picture from GRAVATAR
+app.get('/get/employees/profile/:email', async (request, result) =>{
+    console.log('Getting profile picutre')
+    const { email } = request.params;
+    const hash = crypto.createHash('sha256').update(email.trim().toLowerCase()).digest('hex');
+    console.error('https://gravatar.com/avatar/'+hash);
+    try{
+        
+        const response = await axios.get('https://gravatar.com/avatar/'+hash);
+        
+        console.error(response);
+        result.json(response);
+        
+    }catch (error){
+        console.error('Error fetching profile');
+        result.status(500).json({error: 'Error retrieving profile picutre for hash:'+hash});
     }
 })
 
