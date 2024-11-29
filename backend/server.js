@@ -1,6 +1,7 @@
 const express = require('express');
 const {Pool} = require('pg');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const app = express();
 const PORT = 5000;
@@ -10,6 +11,8 @@ require('dotenv').config();
 app.use(cors({
     origin: 'http://localhost:3000',
 }));
+
+app.use(bodyParser.json());
 
 const pgData = new Pool({
     user: process.env.DB_USERNAME,
@@ -43,6 +46,27 @@ app.get('/get/employees', async (request, result) =>{
     }catch (error) {
         console.error('Error executng query:', error);
         result.status(500).json({error: 'Error with query'});
+    }
+})
+
+//Update employee first name, last name, and email
+app.post('/api/employee/edit/submit', async (req, res)=>{
+    console.log('Got data');
+    const {first_name, last_name, email, emp_number, emp_role, line_manager, salary, birthdate} = req.body;
+    console.log('Receieved first name:', first_name)
+    console.log('Recieved last name', last_name)
+
+    //send success message back 
+    res.json({message: 'Data recieved!', recievedData: req.body})
+
+    //update the first name, last name, and email
+    //TODO add updating all of the details, this is currently just for testing purposes
+    try{
+        const query = "UPDATE public.employees SET first_name = $1, last_name = $2, email = $3, emp_role = $5, line_manager = $6, salary = $7, birthdate = $8 WHERE emp_number = $4";
+        const queryResult = await pgData.query(query, [first_name, last_name, email, emp_number, emp_role, line_manager, salary, birthdate]);
+        console.log(queryResult);
+    }catch (error) {
+        console.error('Error executng query:', error);
     }
 })
 

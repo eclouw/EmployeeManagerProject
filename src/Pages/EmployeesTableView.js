@@ -1,17 +1,24 @@
-import {Table, Header, HeaderRow, Body, Row, HeaderCell, Cell} from '@table-library/react-table-library/table';
-import { useTheme } from '@table-library/react-table-library/theme';
-import { getTheme } from '@table-library/react-table-library/baseline';
+import Spinner from 'react-bootstrap/Spinner';
 import getData from '../Components/getData';
-import axios from "react-axios";
+import axios from "axios";
 import { useState } from 'react';
 import { useEffect } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import EmployeesTable from '../Components/EmployeeTable';
+import EmployeeEditingForm from '../Components/EmployeeEditingForm';
+import Card from 'react-bootstrap/Card';
+import sendData from '../Components/sendData';
+import employeeValidation from '../Components/Rules/employeeValidation';
+
 
 function EmployeesTableView(){
     const [employeeData, setEmployeeData] = useState([]);
     const [loadingEmployeeData, setLoadingEmployeeData] = useState(true);
     const [tableData, setTableData] = useState({nodes : []})
-    
-      
+    const [selectedEmployee, setSelectedEmployee] = useState([]);
+    const [roleData, setRoleData] = useState([]);
+
+
       //Get Employee Data
       useEffect(() => {
         const fetchEmployeeData = async()=>{
@@ -20,100 +27,115 @@ function EmployeesTableView(){
           setEmployeeData(employees);
         }
 
+        const fetchRoleData = async()=>{
+          const roles = await getData("roles");
+          console.log("Fetched roles", roles);
+          setRoleData(roles);
+        }
+
         fetchEmployeeData();
+        fetchRoleData();
       }, [])
 
       //UseEffect for when employeeData is altered
       useEffect(()=>{
+        
         if (employeeData.length > 0 && Array.isArray(employeeData)){
-          console.log("employee data is: " + employeeData.length)
-          setTableData({nodes: employeeData})
-          setLoadingEmployeeData(false);
+          const mappedData = employeeData.map((employee) => ({
+            ...employee,
+            id: employee.emp_number, //map emp_number to id to allow for selection in the table
+            value: employee.emp_number,
+            label: employee.first_name + ' ' + employee.last_name,
+            birthdate: employee.birthdate.split("T")[0],
+        }));
+        setTableData({ nodes: mappedData });
+        setLoadingEmployeeData(false);
         }
       }, [employeeData])
 
-      useEffect(()=>{
-        console.log("tabledata",tableData)
-      }, [tableData])
-
-      //Create a table based on employee data
-      const COLUMNS=[
-       {
-        label:'FirstName',
-        renderCell:(item)=>item.first_name
-       },
-       {
-        label:'LastName',
-        renderCell:(item)=>item.last_name
-       },
-
-      ]
-
       
-    //table theme
-    const theme = useTheme(getTheme());
+      
+
+
+    //Get the employee that is selected in the table
+    const getSelectedEmployee = (employee) =>{
+      setSelectedEmployee(employee);
+    }
+
+    //Update employee details
+    function updateEmployeeDetails(first_name, last_name, email, newLineManager, salary, role, birthdate){
+      const index = tableData.nodes.findIndex((item)=> item.id === selectedEmployee.id);
+      
+      let employees = [...tableData.nodes];
+      
+      let employee = {...employees[index]}
+
+      //Ensure that the employee details are valid
+      if (employeeValidation(first_name, last_name, email, salary, true)){
+        //update the details in the data to what the user has inputed
+        employee.first_name = first_name;
+        employee.last_name = last_name;
+        employee.email = email;
+        employee.emp_role = role;
+        employee.role_name = updateRoleName(role);
+
+        //update the line manager details
+        employee.line_manager = newLineManager.emp_number;
+        employee.manager_name = newLineManager.first_name + ' ' + newLineManager.last_name;
+
+        employee.salary = salary;
+        employee.birthdate = birthdate;
+        employees[index] = employee;
+        
+
+        upDateData(employee)
+        console.log(employee);
+        
+        setTableData({nodes: employees});
+      }
+      
+      
+    }
+
+    function updateRoleName(id){
+      const newRole = roleData.find((item)=> item.id == id);
+      return newRole.role_name;
+    }
+
+    //TEMP FUNCTION TO TEST IF SENDING TO BACKEND WORKS
+    const upDateData = async(data) =>{
+      sendData(data, "employees");
+    }
+
+    const data = tableData;
+    
+
+    
 
     return (
     <div className='EmployeesTable'>
-        {loadingEmployeeData && tableData.length===0 ?(
-          <p>loading</p>
+        {loadingEmployeeData || tableData.nodes.length===0 ?(
+          <Spinner animation='border'/>
         ):(
           <>
-          <Table data={tableData} theme={theme}>
-            {
-              (tableList)=>(
-                <>
-                <Header>
-                  <HeaderRow>
-                  <HeaderCell>
-                      Employee Number
-                    </HeaderCell>
-                    <HeaderCell>
-                      First Name
-                    </HeaderCell>
-                    <HeaderCell>
-                      Last Name
-                    </HeaderCell>
-                    <HeaderCell>
-                      Role
-                    </HeaderCell>
-                    <HeaderCell>
-                      Line Manager
-                    </HeaderCell>
-                    <HeaderCell>
-                      Salary
-                    </HeaderCell>
-                    <HeaderCell>
-                      Email
-                    </HeaderCell>
-                    <HeaderCell>
-                      Birth Date
-                    </HeaderCell>
-                  </HeaderRow>
-                </Header>
-                <Body>
-                  {tableList.map((item)=>(
-                    <Row key={item.emp_number} item={item}>
-                      <Cell>{item.emp_number}</Cell>
-                      <Cell>{item.first_name}</Cell>
-                      <Cell>{item.last_name}</Cell>
-                      <Cell>{item.role_name}</Cell>
-                      <Cell>{item.manager_name}</Cell>
-                      <Cell>{item.salary}</Cell>
-                      <Cell>{item.email}</Cell>
-                      <Cell>
-                        {item.birthdate}
-                      </Cell>
-                    </Row>
-                    
-                  ))}
-                </Body>
-                </>
-              )
-            }
-          </Table>
+          <Card>
+            <Card.Body>
+              <Card.Title>Employees</Card.Title>
+            <EmployeesTable data = {tableData} onSelection={getSelectedEmployee}/>
+            </Card.Body>
+          </Card>
+          <Card>
+            <Card.Body>
+            <Card.Title>Employee Editor</Card.Title>
+            <Card.Subtitle>Currently Selected Employee with ID:{selectedEmployee.emp_number}</Card.Subtitle>
+            <EmployeeEditingForm selectedEmployee={selectedEmployee} onSubmit={updateEmployeeDetails} roles={roleData} employees={tableData.nodes}/>
+            </Card.Body>
+          </Card>
+          
+          
           </>
         )}
+        
     </div>
     );
 }
