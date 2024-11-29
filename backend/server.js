@@ -2,6 +2,7 @@ const express = require('express');
 const {Pool} = require('pg');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const crypto = require('crypto')
 
 const app = express();
 const PORT = 5000;
@@ -48,6 +49,7 @@ app.get('/get/employees', async (request, result) =>{
         result.status(500).json({error: 'Error with query'});
     }
 })
+
 
 //Update employee first name, last name, and email
 app.post('/api/employee/edit/submit', async (req, res)=>{

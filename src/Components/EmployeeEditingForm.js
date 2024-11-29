@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col';
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import React from 'react';
+import CryptoJS from 'crypto-js';
 
 function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees}){
     
@@ -15,10 +16,11 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees}){
     const [inputEmployeeRole, setInputEmployeeRole] = useState(0);
     const [inputEmployeeManager, setInputEmployeeManager] = useState([]);
     const [inputEmployeeBirthDate, setInputEmployeeBirthDate] = useState('');
+    const [inputEmployeeEmailHash, setInputEmployeeEmailHash] = useState('');
     console.log(roles);
 
     useEffect(()=>{
-        if (selectedEmployee){
+        if (selectedEmployee != undefined){
             setInputEmployeeFirstName(selectedEmployee.first_name);
             setInputEmployeeLastName(selectedEmployee.last_name);
             setInputEmployeeEmail(selectedEmployee.email);
@@ -28,6 +30,13 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees}){
             //Set the employee line manager
             const lManager = employees.find((item)=> item.emp_number == selectedEmployee.line_manager);
             setInputEmployeeManager(lManager);
+
+            //Get the email hash for gravatar
+            if (selectedEmployee.email){
+              const hash = CryptoJS.SHA256(selectedEmployee.email.trim().toLowerCase()).toString(CryptoJS.enc.Hex);
+              setInputEmployeeEmailHash(hash);
+            }
+            
             
         }
     }, [selectedEmployee])
@@ -40,6 +49,10 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees}){
 
     return(
         <div>
+          {inputEmployeeEmail && (
+            <img src={'https://gravatar.com/avatar/'+inputEmployeeEmailHash}/>
+          )}
+          
             <Container>
             <Brow>
               <Col>
