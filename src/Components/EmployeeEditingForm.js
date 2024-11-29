@@ -14,6 +14,7 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees}){
     const [inputEmployeeSalary, setInputEmployeeSalary] = useState('');
     const [inputEmployeeRole, setInputEmployeeRole] = useState(0);
     const [inputEmployeeManager, setInputEmployeeManager] = useState([]);
+    const [inputEmployeeBirthDate, setInputEmployeeBirthDate] = useState('');
     console.log(roles);
 
     useEffect(()=>{
@@ -23,6 +24,7 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees}){
             setInputEmployeeEmail(selectedEmployee.email);
             setInputEmployeeSalary(selectedEmployee.salary);
             setInputEmployeeRole(selectedEmployee.emp_role)
+            setInputEmployeeBirthDate(selectedEmployee.birthdate)
             //Set the employee line manager
             const lManager = employees.find((item)=> item.emp_number == selectedEmployee.line_manager);
             setInputEmployeeManager(lManager);
@@ -74,7 +76,7 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees}){
               </Col>
               <Col>
                 <p>Birth Date
-                <input type="text" defaultValue={selectedEmployee.birthdate}/>
+                <input type="date" id="input_birthdate" value={inputEmployeeBirthDate} onChange={(e)=>setInputEmployeeBirthDate(e.target.value)}/>
                 </p>
               </Col>
             </Brow>

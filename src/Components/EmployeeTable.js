@@ -66,28 +66,29 @@ function EmployeeTable({data,  onSelection, roles}){
   //enable sorting for the table
   function onSortChange(action, state){
     console.log(action, state);
-    if (state.sortKey == 'emp_number'){
-        const sorted = [...data.nodes].sort((a,b) => a.emp_number - b.emp_number);
-        setSortedData({nodes: sorted});
-    }else if (state.sortKey == 'first_name'){
-        const sorted = [...data.nodes].sort((a,b) => a.first_name.localeCompare(b.first_name));
-        setSortedData({nodes: sorted});
-    }else if (state.sortKey == 'last_name'){
-        const sorted = [...data.nodes].sort((a,b) => a.last_name.localeCompare(b.last_name));
-        setSortedData({nodes: sorted});
-    }else if (state.sortKey == 'role_name'){
-        const sorted = [...data.nodes].sort((a,b) => a.role_name.localeCompare(b.role_name));
-        setSortedData({nodes: sorted});
-    }else if (state.sortKey == 'manager_name'){
-        const sorted = [...data.nodes].sort((a,b) => a.manager_name.localeCompare(b.manager_name));
-        setSortedData({nodes: sorted});
-    }else if (state.sortKey == 'salary'){
-        const sorted = [...data.nodes].sort((a,b) => a.salary - b.salary);
-        setSortedData({nodes: sorted});
-    }else if (state.sortKey == 'email'){
-        const sorted = [...data.nodes].sort((a,b) => a.email.localeCompare(b.email));
-        setSortedData({nodes: sorted});
-    }
+    // if (state.sortKey == 'emp_number'){
+    //     //const sorted = [...data.nodes].sort((a,b) => a.emp_number - b.emp_number);
+    //     //setSortedData({nodes: sorted});
+    // }else if (state.sortKey == 'first_name'){
+    //     const sorted = [...data.nodes].sort((a,b) => a.first_name.localeCompare(b.first_name));
+    //     setSortedData({nodes: sorted});
+    // }else if (state.sortKey == 'last_name'){
+    //     const sorted = [...data.nodes].sort((a,b) => a.last_name.localeCompare(b.last_name));
+    //     setSortedData({nodes: sorted});
+    // }else if (state.sortKey == 'role_name'){
+    //     const sorted = [...data.nodes].sort((a,b) => a.role_name.localeCompare(b.role_name));
+    //     setSortedData({nodes: sorted});
+    // }else if (state.sortKey == 'manager_name'){
+    //     const sorted = [...data.nodes].sort((a,b) => a.manager_name.localeCompare(b.manager_name));
+    //     setSortedData({nodes: sorted});
+    // }else if (state.sortKey == 'salary'){
+    //     const sorted = [...data.nodes].sort((a,b) => a.salary - b.salary);
+    //     setSortedData({nodes: sorted});
+    // }else if (state.sortKey == 'email'){
+    //     const sorted = [...data.nodes].sort((a,b) => a.email.localeCompare(b.email));
+    //     setSortedData({nodes: sorted});
+    // }
+    //TODO: IMPLEMENT SORTING FOR THE BIRTHDATE
   }
   const sort = useSort(data, {
     state:{
@@ -98,14 +99,20 @@ function EmployeeTable({data,  onSelection, roles}){
   },
     {
         sortFns:{
-            emp_number: (array) => array.sort((a, b) => (a.nodes || []).length - (b.nodes || []).length),
+            emp_number: (array) => array.sort((a,b) => a.emp_number - b.emp_number),
+            first_name: (array) => array.sort((a,b) => a.first_name.localeCompare(b.first_name)),
+            last_name: (array) => array.sort((a,b) => a.last_name.localeCompare(b.last_name)),
+            role_name: (array) => array.sort((a,b) => a.role_name.localeCompare(b.role_name)),
+            manager_name: (array) => array.sort((a,b) => a.manager_name.localeCompare(b.manager_name)),
+            salary: (array) => array.sort((a,b) => a.salary - b.salary),
+            email: (array) => array.sort((a,b) => a.email.localeCompare(b.email)),
         }
     })
 
 
   return(
     <>
-          <Table data={sortedData} theme={theme} select={sel} pagination={pagination} sort={sort}>
+          <Table data={data} theme={theme} select={sel} pagination={pagination} sort={sort}>
             {
               (tableList)=>(
                 <>

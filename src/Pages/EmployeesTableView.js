@@ -45,6 +45,7 @@ function EmployeesTableView(){
             id: employee.emp_number, //map emp_number to id to allow for selection in the table
             value: employee.emp_number,
             label: employee.first_name + ' ' + employee.last_name,
+            birthdate: employee.birthdate.split("T")[0],
         }));
         setTableData({ nodes: mappedData });
         setLoadingEmployeeData(false);
@@ -78,7 +79,9 @@ function EmployeesTableView(){
       employee.line_manager = newLineManager.emp_number;
       employee.manager_name = newLineManager.first_name + ' ' + newLineManager.last_name;
       employee.salary = document.getElementById('input_salary').value;
+      employee.birthdate = document.getElementById('input_birthdate').value;
       employees[index] = employee;
+      
 
       upDateData(employee)
       console.log(employee);
