@@ -33,7 +33,7 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees}){
     }, [selectedEmployee])
 
     function onSendData(){
-      onSubmit(inputEmployeeManager);
+      onSubmit(inputEmployeeFirstName, inputEmployeeLastName, inputEmployeeEmail, inputEmployeeManager, inputEmployeeSalary, inputEmployeeRole, inputEmployeeBirthDate);
     }
 
     console.log("frome employee table", employees);

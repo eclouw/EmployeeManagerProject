@@ -9,7 +9,7 @@ import EmployeesTableView from './Pages/EmployeesTableView';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <EmployeesTableView />
+    <App />
   </React.StrictMode>
 );
 

@@ -8,6 +8,7 @@ import EmployeesTable from '../Components/EmployeeTable';
 import EmployeeEditingForm from '../Components/EmployeeEditingForm';
 import Card from 'react-bootstrap/Card';
 import sendData from '../Components/sendData';
+import employeeValidation from '../Components/Rules/employeeValidation';
 
 
 function EmployeesTableView(){
@@ -62,33 +63,38 @@ function EmployeesTableView(){
     }
 
     //Update employee details
-    function updateEmployeeDetails(newLineManager){
+    function updateEmployeeDetails(first_name, last_name, email, newLineManager, salary, role, birthdate){
       const index = tableData.nodes.findIndex((item)=> item.id === selectedEmployee.id);
       
       let employees = [...tableData.nodes];
       
       let employee = {...employees[index]}
-      
-      //update the details in the data to what the user has inputed
-      employee.first_name = document.getElementById('input_first_name').value;
-      employee.last_name = document.getElementById('input_last_name').value;
-      employee.email = document.getElementById('input_email').value;
-      employee.emp_role = document.getElementById('input_role').value;
-      employee.role_name = updateRoleName(document.getElementById('input_role').value);
 
-      //update the line manager details
-      employee.line_manager = newLineManager.emp_number;
-      employee.manager_name = newLineManager.first_name + ' ' + newLineManager.last_name;
+      //Ensure that the employee details are valid
+      if (employeeValidation(first_name, last_name, email, salary, true)){
+        //update the details in the data to what the user has inputed
+        employee.first_name = first_name;
+        employee.last_name = last_name;
+        employee.email = email;
+        employee.emp_role = role;
+        employee.role_name = updateRoleName(role);
 
-      employee.salary = document.getElementById('input_salary').value;
-      employee.birthdate = document.getElementById('input_birthdate').value;
-      employees[index] = employee;
-      
+        //update the line manager details
+        employee.line_manager = newLineManager.emp_number;
+        employee.manager_name = newLineManager.first_name + ' ' + newLineManager.last_name;
 
-      upDateData(employee)
-      console.log(employee);
+        employee.salary = salary;
+        employee.birthdate = birthdate;
+        employees[index] = employee;
+        
+
+        upDateData(employee)
+        console.log(employee);
+        
+        setTableData({nodes: employees});
+      }
       
-      setTableData({nodes: employees});
+      
     }
 
     function updateRoleName(id){
