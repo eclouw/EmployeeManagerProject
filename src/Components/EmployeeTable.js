@@ -106,6 +106,7 @@ function EmployeeTable({data,  onSelection, roles}){
             manager_name: (array) => array.sort((a,b) => a.manager_name.localeCompare(b.manager_name)),
             salary: (array) => array.sort((a,b) => a.salary - b.salary),
             email: (array) => array.sort((a,b) => a.email.localeCompare(b.email)),
+            birthdate:(array) => array.sort((a,b) => a.birthdate.localeCompare(b.birthdate))
         }
     })
 
@@ -139,9 +140,9 @@ function EmployeeTable({data,  onSelection, roles}){
                     <HeaderCellSort sortKey='email'>
                       Email
                     </HeaderCellSort>
-                    <HeaderCell>
+                    <HeaderCellSort sortKey="birthdate">
                       Birth Date
-                    </HeaderCell>
+                    </HeaderCellSort>
                   </HeaderRow>
                 </Header>
                 <Body>
