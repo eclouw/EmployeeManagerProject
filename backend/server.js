@@ -50,24 +50,6 @@ app.get('/get/employees', async (request, result) =>{
     }
 })
 
-//Get employee profile picture from GRAVATAR
-app.get('/get/employees/profile/:email', async (request, result) =>{
-    console.log('Getting profile picutre')
-    const { email } = request.params;
-    const hash = crypto.createHash('sha256').update(email.trim().toLowerCase()).digest('hex');
-    console.error('https://gravatar.com/avatar/'+hash);
-    try{
-        
-        const response = await axios.get('https://gravatar.com/avatar/'+hash);
-        
-        console.error(response);
-        result.json(response);
-        
-    }catch (error){
-        console.error('Error fetching profile');
-        result.status(500).json({error: 'Error retrieving profile picutre for hash:'+hash});
-    }
-})
 
 //Update employee first name, last name, and email
 app.post('/api/employee/edit/submit', async (req, res)=>{
