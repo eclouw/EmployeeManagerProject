@@ -9,6 +9,7 @@ import EmployeeEditingForm from '../Components/EmployeeEditingForm';
 import Card from 'react-bootstrap/Card';
 import sendData from '../Components/sendData';
 import employeeValidation from '../Components/Rules/employeeValidation';
+import Accordion from 'react-bootstrap/Accordion';
 
 
 function EmployeesTableView(){
@@ -17,6 +18,7 @@ function EmployeesTableView(){
     const [tableData, setTableData] = useState({nodes : []})
     const [selectedEmployee, setSelectedEmployee] = useState([]);
     const [roleData, setRoleData] = useState([]);
+    const [newEmployeeData, setNewEmployeeData] = useState([]);
 
 
       //Get Employee Data
@@ -96,18 +98,17 @@ function EmployeesTableView(){
       
       
     }
-
+    //Get the role name from the role id
     function updateRoleName(id){
       const newRole = roleData.find((item)=> item.id == id);
       return newRole.role_name;
     }
 
-    //TEMP FUNCTION TO TEST IF SENDING TO BACKEND WORKS
+    //Update an employee's data by sending the employee data to the backend
     const upDateData = async(data) =>{
       sendData(data, "employees");
     }
 
-    const data = tableData;
     
 
     
@@ -124,13 +125,21 @@ function EmployeesTableView(){
             <EmployeesTable data = {tableData} onSelection={getSelectedEmployee}/>
             </Card.Body>
           </Card>
-          <Card>
-            <Card.Body>
-            <Card.Title>Employee Editor</Card.Title>
-            <Card.Subtitle>Currently Selected Employee with ID:{selectedEmployee.emp_number}</Card.Subtitle>
-            <EmployeeEditingForm selectedEmployee={selectedEmployee} onSubmit={updateEmployeeDetails} roles={roleData} employees={tableData.nodes}/>
-            </Card.Body>
-          </Card>
+          <Accordion defaultActiveKey="0">
+            <Accordion.Item eventKey='0'>
+              <Accordion.Header>Employee Editor</Accordion.Header>
+              <Accordion.Body>
+              <EmployeeEditingForm selectedEmployee={selectedEmployee} onSubmit={updateEmployeeDetails} roles={roleData} employees={tableData.nodes}/>
+              </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey='1'>
+              <Accordion.Header>New Employee</Accordion.Header>
+              <Accordion.Body>
+                
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
+          
           
           
           </>
