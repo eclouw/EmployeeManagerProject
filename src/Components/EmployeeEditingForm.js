@@ -46,7 +46,7 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees, edit
     }
 
     function onDeleteEmployee(){
-      onDelete(selectedEmployee.emp_number);
+      onDelete(selectedEmployee.emp_number, selectedEmployee.line_manager);
     }
 
     console.log("frome employee table", employees);

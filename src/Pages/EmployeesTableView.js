@@ -118,18 +118,16 @@ function EmployeesTableView(){
     }
 
 
-    const deleteEmployee= async(emp_number)=>{
+    const deleteEmployee= async(emp_number, line_manager)=>{
       //Delete the employee on the database
-      const response = await sendData({emp_number: emp_number}, "employees", 3);
+      console.log("employees line manager", line_manager)
+      const response = await sendData({emp_number: emp_number, line_manager: line_manager}, "employees", 3);
       fetchEmployeeData();
       
       
       
     }
     
-
-    
-
     return (
     <div className='EmployeesTable'>
         {loadingEmployeeData || tableData.nodes.length===0 ?(
