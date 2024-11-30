@@ -52,11 +52,12 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees, edit
 
     return(
         <div>
-          {inputEmployeeEmail && (
+          <Container>
+          {inputEmployeeEmail && editing &&(
             <img src={'https://gravatar.com/avatar/'+inputEmployeeEmailHash}/>
           )}
           
-            <Container>
+            
             <Brow >
               <Col  className='right-align'>
                 First Name

@@ -16,7 +16,7 @@ function HomePage(){
                     <Col>
                     </Col>
                     <Col className='app-icon-col'>
-                        <Card style={{ width: '100%', height: '100%'}}>
+                        <Card style={{ width: '100%', height: '40rem'}}>
                             <Card.Img variant='top' src='/images/emp_new_icon.jpg'/>
                             <Card.Body className="d-flex flex-column justify-content-between">
                                 <Card.Title>
@@ -32,7 +32,7 @@ function HomePage(){
                         </Card>
                     </Col>
                     <Col className='app-icon-col'>
-                    <Card style={{ width: '100%' , height: '100%'}}>
+                    <Card style={{ width: '100%' , height: '40rem'}}>
                             <Card.Img variant='top' src='/images/emp_edit_icon.jpg'/>
                             <Card.Body className="d-flex flex-column justify-content-between">
                                 <Card.Title>
