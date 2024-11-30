@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import React from 'react';
 import CryptoJS from 'crypto-js';
+import Button from 'react-bootstrap/Button';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees, editing, onDelete}){
     //States for the currently selected employee details
@@ -55,27 +57,27 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees, edit
           )}
           
             <Container>
-            <Brow>
-              <Col>
-                <p>First Name 
-                <input type="text" value={inputEmployeeFirstName} onChange={(e)=> setInputEmployeeFirstName(e.target.value)} id="input_first_name"/>
-                </p>
+            <Brow >
+              <Col  className='right-align'>
+                First Name
+                <input type="text" value={inputEmployeeFirstName} onChange={(e)=> setInputEmployeeFirstName(e.target.value)} id="input_first_name" className='input-box'/>
+                
               </Col>
-              <Col>
+              <Col  className='right-align'>
                 <p>Last Name 
-                <input type="text" value={inputEmployeeLastName} onChange={(e)=>setInputEmployeeLastName(e.target.value)} id="input_last_name"/>
+                <input type="text" value={inputEmployeeLastName} onChange={(e)=>setInputEmployeeLastName(e.target.value)} id="input_last_name" className='input-box'/>
                 </p>
               </Col>
-              <Col>
+              <Col  className='right-align'>
                 <p>Email 
-                <input type="text" value={inputEmployeeEmail} onChange={(e)=>setInputEmployeeEmail(e.target.value)} id="input_email"/>
+                <input type="text" value={inputEmployeeEmail} onChange={(e)=>setInputEmployeeEmail(e.target.value)} id="input_email" className='input-box'/>
                 </p>
               </Col>
             </Brow>
             <Brow>
-              <Col>
+              <Col  className='right-align'>
                 <p>Role
-                <select value={inputEmployeeRole} id="input_role" onChange={(e)=>setInputEmployeeRole(e.target.value)}>
+                <select value={inputEmployeeRole} id="input_role" onChange={(e)=>setInputEmployeeRole(e.target.value)} className='input-box'>
                   {roles.map((role)=>(
                     <option key={role.id} value={role.id}>{role.role_name}</option>
                   ))}
@@ -83,33 +85,50 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees, edit
                 </select>
                 </p>
               </Col>
-              <Col>
+              <Col  className='right-align'>
                 <p>Salary
-                <input type="text" value={inputEmployeeSalary} onChange={(e)=>setInputEmployeeSalary(e.target.value)} id="input_salary"/>
+                <input type="text" value={inputEmployeeSalary} onChange={(e)=>setInputEmployeeSalary(e.target.value)} id="input_salary" className='input-box'/>
                 </p>
               </Col>
-              <Col>
+              <Col  className='right-align'>
                 <p>Birth Date
-                <input type="date" id="input_birthdate" value={inputEmployeeBirthDate} onChange={(e)=>setInputEmployeeBirthDate(e.target.value)}/>
+                <input type="date" id="input_birthdate" value={inputEmployeeBirthDate} onChange={(e)=>setInputEmployeeBirthDate(e.target.value)} className='input-box'/>
                 </p>
               </Col>
             </Brow>
             <Brow>
             <Col>
-            <p>
-              Line Manager
-              <Select options={employees} value={inputEmployeeManager} onChange={(e)=>setInputEmployeeManager(e)} id="input_line_manager" selected={inputEmployeeManager}/>
-            </p>
             </Col>
             <Col>
-            Select Line Manager
             </Col>
+            <Col>
+           
+            Line Manager
+            
+              <div>
+              <Select options={employees} value={inputEmployeeManager} onChange={(e)=>setInputEmployeeManager(e)} id="input_line_manager" selected={inputEmployeeManager}/>
+              </div>
+              
+            
+            </Col>
+
             </Brow>
             <Brow>
-            <button onClick={onSendData}>Submit Changes</button>
-            {editing &&(
-            <button onClick={onDeleteEmployee}>Delete Employee</button>
+            <Col>
+            
+            {editing ?(
+              <>
+            <Button onClick={onDeleteEmployee} className='delete-button'>Delete Employee</Button>
+            <Button onClick={onSendData} className='submit-button'>Submit Changes</Button>
+            </>
+            ) : (
+              <>
+              <Button onClick={onSendData} className='create-button'>Create Employee</Button>
+              </>
             )}
+            
+            </Col>
+            
             </Brow>
           </Container>
         </div>
