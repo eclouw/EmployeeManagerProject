@@ -50,7 +50,6 @@ function EmployeeCreator(){
           birthdate: birthdate
         }
 
-        console.log("role",role);
         
         
         createEmployee(newEmployee);

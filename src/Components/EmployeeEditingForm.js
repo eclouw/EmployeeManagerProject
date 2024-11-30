@@ -16,7 +16,6 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees, edit
     const [inputEmployeeManager, setInputEmployeeManager] = useState([]);
     const [inputEmployeeBirthDate, setInputEmployeeBirthDate] = useState('');
     const [inputEmployeeEmailHash, setInputEmployeeEmailHash] = useState('');
-    console.log(roles);
 
     useEffect(()=>{
         if (selectedEmployee != undefined){
@@ -41,7 +40,6 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees, edit
     }, [selectedEmployee])
 
     function onSendData(){
-      console.log("role from form", document.getElementById('input_role').value);
       onSubmit(inputEmployeeFirstName, inputEmployeeLastName, inputEmployeeEmail, inputEmployeeManager, inputEmployeeSalary, document.getElementById('input_role').value, inputEmployeeBirthDate);
     }
 
@@ -49,7 +47,6 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees, edit
       onDelete(selectedEmployee.emp_number, selectedEmployee.line_manager);
     }
 
-    console.log("frome employee table", employees);
 
     return(
         <div>

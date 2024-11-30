@@ -23,8 +23,6 @@ function EmployeesTableView(){
 
       //Get Employee Data
       useEffect(() => {
-        
-
         const fetchRoleData = async()=>{
           const roles = await getData("roles");
           console.log("Fetched roles", roles);
@@ -99,7 +97,6 @@ function EmployeesTableView(){
         
 
         upDateData(employee)
-        console.log(employee);
         
         setTableData({nodes: employees});
       }
@@ -120,7 +117,6 @@ function EmployeesTableView(){
 
     const deleteEmployee= async(emp_number, line_manager)=>{
       //Delete the employee on the database
-      console.log("employees line manager", line_manager)
       const response = await sendData({emp_number: emp_number, line_manager: line_manager}, "employees", 3);
       fetchEmployeeData();
       
