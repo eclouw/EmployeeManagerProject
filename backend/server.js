@@ -84,6 +84,20 @@ app.post('/api/employee/edit/submit', async (req, res)=>{
     }
 })
 
+app.post('/api/employee/delete', async (req, res)=>{
+    console.log('Deleteing employee');
+    const {emp_number} = req.body;
+    const query = "DELETE FROM public.employees WHERE emp_number = $1"
+    try{
+        const queryResult = await pgData.query(query, [emp_number]);
+        res.json({message: "user deleted"});
+    }catch (error){
+        console.error('Error executng query:', error);
+        res.status(500).json({error: 'Error with query'});
+    }
+    
+})
+
 app.post('/api/employee/create/submit', async (req, res)=>{
     console.log('Creating new employee');
     const {first_name, last_name, email, emp_role, line_manager, salary, birthdate} = req.body;
@@ -99,7 +113,7 @@ app.post('/api/employee/create/submit', async (req, res)=>{
                 const queryResult = await pgData.query(query, [first_name, last_name, email, emp_role, salary, birthdate]);
                 console.log(queryResult);
             }catch(error){
-                
+                console.error('Error executng query:', error);
             }
             
         }else{

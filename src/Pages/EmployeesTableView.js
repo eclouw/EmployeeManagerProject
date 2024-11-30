@@ -23,11 +23,7 @@ function EmployeesTableView(){
 
       //Get Employee Data
       useEffect(() => {
-        const fetchEmployeeData = async()=>{
-          const employees = await getData("employees");
-          console.log("Fetched employees", employees)
-          setEmployeeData(employees);
-        }
+        
 
         const fetchRoleData = async()=>{
           const roles = await getData("roles");
@@ -40,9 +36,18 @@ function EmployeesTableView(){
         fetchRoleData();
       }, [])
 
+      const fetchEmployeeData = async()=>{
+        setLoadingEmployeeData(true);
+        const employees = await getData("employees");
+        console.log("Fetched employees", employees)
+        setEmployeeData(employees);
+      }
+
+
+
       //UseEffect for when employeeData is altered
       useEffect(()=>{
-        
+        setLoadingEmployeeData(true);
         if (employeeData.length > 0 && Array.isArray(employeeData)){
           const mappedData = employeeData.map((employee) => ({
             ...employee,
@@ -113,8 +118,13 @@ function EmployeesTableView(){
     }
 
 
-    function deleteEmployee(emp_number){
-      console.log(emp_number);
+    const deleteEmployee= async(emp_number)=>{
+      //Delete the employee on the database
+      const response = await sendData({emp_number: emp_number}, "employees", 3);
+      fetchEmployeeData();
+      
+      
+      
     }
     
 
@@ -132,25 +142,20 @@ function EmployeesTableView(){
             <EmployeesTable data = {tableData} onSelection={getSelectedEmployee}/>
             </Card.Body>
           </Card>
-          <Accordion defaultActiveKey="0">
+          
+          
+          
+          
+          </>
+        )}
+        <Accordion defaultActiveKey="0">
             <Accordion.Item eventKey='0'>
               <Accordion.Header><h3>Employee Editor</h3></Accordion.Header>
               <Accordion.Body>
               <EmployeeEditingForm selectedEmployee={selectedEmployee} onSubmit={updateEmployeeDetails} roles={roleData} employees={tableData.nodes} editing={true} onDelete={deleteEmployee}/>
               </Accordion.Body>
             </Accordion.Item>
-            <Accordion.Item eventKey='1'>
-              <Accordion.Header><h3>New Employee</h3></Accordion.Header>
-              <Accordion.Body>
-              
-              </Accordion.Body>
-            </Accordion.Item>
           </Accordion>
-          
-          
-          
-          </>
-        )}
         
     </div>
     );
