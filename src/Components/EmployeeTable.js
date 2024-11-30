@@ -7,7 +7,6 @@ import { getTheme } from '@table-library/react-table-library/baseline';
 import React from 'react';
 
 function EmployeeTable({data,  onSelection, roles}){
-    const[sortedData, setSortedData] = React.useState(data);
 
 
     //Table Pagination
