@@ -70,16 +70,17 @@ app.post('/api/employee/edit/submit', async (req, res)=>{
     console.log('Receieved first name:', first_name)
     console.log('Recieved last name', last_name)
 
-    //send success message back 
-    res.json({message: 'Data recieved!', recievedData: req.body});
+    
 
     //update the first name, last name, and email
     try{
         const query = "UPDATE public.employees SET first_name = $1, last_name = $2, email = $3, emp_role = $5, line_manager = $6, salary = $7, birthdate = $8 WHERE emp_number = $4";
         const queryResult = await pgData.query(query, [first_name, last_name, email, emp_number, emp_role, line_manager, salary, birthdate]);
         console.log(queryResult);
+        res.json({message: 'Employee Updated', recievedData: req.body});
     }catch (error) {
         console.error('Error executng query:', error);
+        result.status(500).json({error: 'Error with query'});
     }
 })
 
@@ -108,17 +109,16 @@ app.post('/api/employee/create/submit', async (req, res)=>{
     const {first_name, last_name, email, emp_role, line_manager, salary, birthdate} = req.body;
     console.log('Receieved first name:', first_name)
     console.log('Recieved last name', last_name)
-
-    res.json({message: 'Data recieved!', recievedData: req.body});
-
-    
+  
         if (line_manager == "NULL"){
             try{
                 const query = "INSERT INTO public.employees (first_name, last_name, email, emp_role, line_manager, salary, birthdate) VALUES ($1, $2, $3, $4, null, $5, $6)";
                 const queryResult = await pgData.query(query, [first_name, last_name, email, emp_role, salary, birthdate]);
                 console.log(queryResult);
+                res.json({message: 'Employee Created', recievedData: req.body});
             }catch(error){
                 console.error('Error executng query:', error);
+                result.status(500).json({error: 'Error with query'});
             }
             
         }else{
@@ -126,8 +126,10 @@ app.post('/api/employee/create/submit', async (req, res)=>{
                 const query = "INSERT INTO public.employees (first_name, last_name, email, emp_role, line_manager, salary, birthdate) VALUES ($1, $2, $3, $4, $5, $6, $7)";
             const queryResult = await pgData.query(query, [first_name, last_name, email, emp_role, line_manager, salary, birthdate]);
             console.log(queryResult);
+            res.json({message: 'Employee Created', recievedData: req.body});
             }catch(error){
                 console.error('Error executng query:', error);
+                result.status(500).json({error: 'Error with query'});
             }
             
         }
