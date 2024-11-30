@@ -26,6 +26,7 @@ const pgData = new Pool({
 
 //Get all the roles from the database
 app.get('/get/roles', async (request, result) => {
+    
     try {
         const query = 'SELECT * from public.roles';
         const res = await pgData.query(query);
@@ -39,14 +40,25 @@ app.get('/get/roles', async (request, result) => {
 
 //get all the employees from the database
 app.get('/get/employees', async (request, result) =>{
+    const newPgData = new Pool({
+        user: process.env.DB_USERNAME,
+        host: process.env.ENDPOINT,
+        database: process.env.DB_NAME,
+        password: process.env.PASSWORD,
+        port: 5432,
+    
+    }); 
     try {
         const query = "SELECT e.*,r.role_name, CONCAT(m.first_name, ' ', m.last_name) AS manager_name FROM public.employees e JOIN roles r ON e.emp_role=r.id LEFT JOIN employees m ON e.line_manager = m.emp_number";
-        const res = await pgData.query(query);
-
+        const res = await newPgData.query(query);
+        console.log("Fetched Employees from database")
+        console.log(res.rows.length);
         result.json(res.rows);
     }catch (error) {
         console.error('Error executng query:', error);
         result.status(500).json({error: 'Error with query'});
+    }finally{
+        await newPgData.end();
     }
 })
 
@@ -59,7 +71,7 @@ app.post('/api/employee/edit/submit', async (req, res)=>{
     console.log('Recieved last name', last_name)
 
     //send success message back 
-    res.json({message: 'Data recieved!', recievedData: req.body})
+    res.json({message: 'Data recieved!', recievedData: req.body});
 
     //update the first name, last name, and email
     //TODO add updating all of the details, this is currently just for testing purposes
@@ -70,6 +82,40 @@ app.post('/api/employee/edit/submit', async (req, res)=>{
     }catch (error) {
         console.error('Error executng query:', error);
     }
+})
+
+app.post('/api/employee/create/submit', async (req, res)=>{
+    console.log('Creating new employee');
+    const {first_name, last_name, email, emp_role, line_manager, salary, birthdate} = req.body;
+    console.log('Receieved first name:', first_name)
+    console.log('Recieved last name', last_name)
+
+    res.json({message: 'Data recieved!', recievedData: req.body});
+
+    
+        if (line_manager == "NULL"){
+            try{
+                const query = "INSERT INTO public.employees (first_name, last_name, email, emp_role, line_manager, salary, birthdate) VALUES ($1, $2, $3, $4, null, $5, $6)";
+                const queryResult = await pgData.query(query, [first_name, last_name, email, emp_role, salary, birthdate]);
+                console.log(queryResult);
+            }catch(error){
+                
+            }
+            
+        }else{
+            try{
+                const query = "INSERT INTO public.employees (first_name, last_name, email, emp_role, line_manager, salary, birthdate) VALUES ($1, $2, $3, $4, $5, $6, $7)";
+            const queryResult = await pgData.query(query, [first_name, last_name, email, emp_role, line_manager, salary, birthdate]);
+            console.log(queryResult);
+            }catch(error){
+                console.error('Error executng query:', error);
+            }
+            
+        }
+        
+        
+        
+    
 })
 
 

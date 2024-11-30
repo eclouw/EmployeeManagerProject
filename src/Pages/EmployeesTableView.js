@@ -18,7 +18,7 @@ function EmployeesTableView(){
     const [tableData, setTableData] = useState({nodes : []})
     const [selectedEmployee, setSelectedEmployee] = useState([]);
     const [roleData, setRoleData] = useState([]);
-    const [newEmployeeData, setNewEmployeeData] = useState([]);
+    
 
 
       //Get Employee Data
@@ -34,6 +34,7 @@ function EmployeesTableView(){
           console.log("Fetched roles", roles);
           setRoleData(roles);
         }
+
 
         fetchEmployeeData();
         fetchRoleData();
@@ -63,6 +64,8 @@ function EmployeesTableView(){
     const getSelectedEmployee = (employee) =>{
       setSelectedEmployee(employee);
     }
+
+    
 
     //Update employee details
     function updateEmployeeDetails(first_name, last_name, email, newLineManager, salary, role, birthdate){
@@ -106,9 +109,13 @@ function EmployeesTableView(){
 
     //Update an employee's data by sending the employee data to the backend
     const upDateData = async(data) =>{
-      sendData(data, "employees");
+      sendData(data, "employees", 1);
     }
 
+
+    function deleteEmployee(emp_number){
+      console.log(emp_number);
+    }
     
 
     
@@ -127,15 +134,15 @@ function EmployeesTableView(){
           </Card>
           <Accordion defaultActiveKey="0">
             <Accordion.Item eventKey='0'>
-              <Accordion.Header>Employee Editor</Accordion.Header>
+              <Accordion.Header><h3>Employee Editor</h3></Accordion.Header>
               <Accordion.Body>
-              <EmployeeEditingForm selectedEmployee={selectedEmployee} onSubmit={updateEmployeeDetails} roles={roleData} employees={tableData.nodes}/>
+              <EmployeeEditingForm selectedEmployee={selectedEmployee} onSubmit={updateEmployeeDetails} roles={roleData} employees={tableData.nodes} editing={true} onDelete={deleteEmployee}/>
               </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey='1'>
-              <Accordion.Header>New Employee</Accordion.Header>
+              <Accordion.Header><h3>New Employee</h3></Accordion.Header>
               <Accordion.Body>
-                
+              
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>

@@ -6,8 +6,7 @@ import Select from 'react-select';
 import React from 'react';
 import CryptoJS from 'crypto-js';
 
-function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees}){
-    
+function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees, editing, onDelete}){
     //States for the currently selected employee details
     const [inputEmployeeFirstName, setInputEmployeeFirstName] = useState('');
     const [inputEmployeeLastName, setInputEmployeeLastName] = useState('');
@@ -42,7 +41,12 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees}){
     }, [selectedEmployee])
 
     function onSendData(){
-      onSubmit(inputEmployeeFirstName, inputEmployeeLastName, inputEmployeeEmail, inputEmployeeManager, inputEmployeeSalary, inputEmployeeRole, inputEmployeeBirthDate);
+      console.log("role from form", document.getElementById('input_role').value);
+      onSubmit(inputEmployeeFirstName, inputEmployeeLastName, inputEmployeeEmail, inputEmployeeManager, inputEmployeeSalary, document.getElementById('input_role').value, inputEmployeeBirthDate);
+    }
+
+    function onDeleteEmployee(){
+      onDelete(selectedEmployee.emp_number);
     }
 
     console.log("frome employee table", employees);
@@ -106,6 +110,9 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees}){
             </Brow>
             <Brow>
             <button onClick={onSendData}>Submit Changes</button>
+            {editing &&(
+            <button onClick={onDeleteEmployee}>Delete Employee</button>
+            )}
             </Brow>
           </Container>
         </div>
