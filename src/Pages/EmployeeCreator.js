@@ -28,7 +28,7 @@ function EmployeeCreator(){
               last_name: '',
               birthdate: '1990-01-01',
               salary: 0,
-              line_manager: -1,
+              line_manager: null,
               email: ''
             })
           }
@@ -68,7 +68,7 @@ function EmployeeCreator(){
             }))
 
             let noLineManager = {
-                emp_number: 'NULL',
+                emp_number: null,
                 first_name: 'No Line Manager',
                 last_name: '',
                 id: 0,

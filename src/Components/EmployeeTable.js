@@ -122,7 +122,8 @@ function EmployeeTable({data,  onSelection, roles}){
                 </Header>
                 <Body>
                   {tableList.map((item)=>(
-                    <Row key={item.emp_number} item={item} id={item.emp_number}>
+                    item.emp_number > 0 && (
+                      <Row key={item.emp_number} item={item} id={item.emp_number}>
                       <Cell>{item.emp_number}</Cell>
                       <Cell>{item.first_name}</Cell>
                       <Cell>{item.last_name}</Cell>
@@ -134,6 +135,8 @@ function EmployeeTable({data,  onSelection, roles}){
                         {item.birthdate}
                       </Cell>
                     </Row>
+                    )
+                    
                     
                   ))}
                 </Body>

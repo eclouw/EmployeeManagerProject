@@ -18,8 +18,17 @@ function EmployeesTableView(){
     const [tableData, setTableData] = useState({nodes : []})
     const [selectedEmployee, setSelectedEmployee] = useState([]);
     const [roleData, setRoleData] = useState([]);
+    const [noLineManagerEmployee, setNoLineManagerEmployee] = useState([]);
     
-
+    //Create a template employee for no line manager to show correctly on table
+    let noLineManager = {
+      emp_number: null,
+      first_name: '',
+      last_name: '',
+      id: 0,
+      value: 0,
+      label: 'No Line Manager'
+    }
 
       //Get Employee Data
       useEffect(() => {
@@ -54,18 +63,20 @@ function EmployeesTableView(){
             label: employee.first_name + ' ' + employee.last_name,
             birthdate: employee.birthdate.split("T")[0],
         }));
-        setTableData({ nodes: mappedData });
+        setTableData({ nodes: mappedData.concat(noLineManager) });
         setLoadingEmployeeData(false);
         }
       }, [employeeData])
 
-      
-      
-
-
     //Get the employee that is selected in the table
     const getSelectedEmployee = (employee) =>{
-      setSelectedEmployee(employee);
+      if (employee.line_manager){
+        setSelectedEmployee(employee);
+      }else{
+        console.log("selected employee without line manager", employee)
+        setSelectedEmployee(employee);
+      }
+      
     }
 
     
