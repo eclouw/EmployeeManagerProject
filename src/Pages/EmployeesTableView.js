@@ -10,6 +10,10 @@ import Card from 'react-bootstrap/Card';
 import sendData from '../Components/sendData';
 import employeeValidation from '../Components/Rules/employeeValidation';
 import Accordion from 'react-bootstrap/Accordion';
+import EmployeeTreeRootCreator from '../Components/TreeGraph/EmployeeTreeRootCreator';
+import EmployeeTree from '../Components/TreeGraph/EmployeeTree';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 
 
 function EmployeesTableView(){
@@ -63,6 +67,7 @@ function EmployeesTableView(){
             birthdate: employee.birthdate.split("T")[0],
         }));
         setTableData({ nodes: mappedData.concat(noLineManager) });
+        console.log("mapped data",mappedData);
         setLoadingEmployeeData(false);
         }
       }, [employeeData])
@@ -140,17 +145,23 @@ function EmployeesTableView(){
           <Spinner animation='border'/>
         ):(
           <>
-          <Card>
-            <Card.Body>
-              <Card.Title>Employees</Card.Title>
+          <Tabs defaultActiveKey='table' id='editTabs' className='mb-3'>
+            <Tab eventKey='table' title='Employee Table'>
             <EmployeesTable data = {tableData} onSelection={getSelectedEmployee}/>
-            </Card.Body>
-          </Card>
+            </Tab>
+            <Tab eventKey='tree-graph' title='Graph View'>
+              <div id="treeWrapper" style={{ width: '100%', height: '50em' }}>
+                <EmployeeTree employees={tableData.nodes}/>
+              </div>
+            </Tab>
+          </Tabs>
+
           
           
           
           
           </>
+          
         )}
         <Accordion defaultActiveKey="0">
             <Accordion.Item eventKey='0'>
@@ -160,6 +171,7 @@ function EmployeesTableView(){
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
+          
         
     </div>
     );
