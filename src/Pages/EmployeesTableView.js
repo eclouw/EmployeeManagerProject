@@ -12,6 +12,8 @@ import employeeValidation from '../Components/Rules/employeeValidation';
 import Accordion from 'react-bootstrap/Accordion';
 import EmployeeTreeRootCreator from '../Components/TreeGraph/EmployeeTreeRootCreator';
 import EmployeeTree from '../Components/TreeGraph/EmployeeTree';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 
 
 function EmployeesTableView(){
@@ -143,16 +145,21 @@ function EmployeesTableView(){
           <Spinner animation='border'/>
         ):(
           <>
-          <Card>
-            <Card.Body>
-              <Card.Title>Employees</Card.Title>
+          <Tabs defaultActiveKey='table' id='editTabs' className='mb-3'>
+            <Tab eventKey='table' title='Employee Table'>
             <EmployeesTable data = {tableData} onSelection={getSelectedEmployee}/>
-            </Card.Body>
-          </Card>
+            </Tab>
+            <Tab eventKey='tree-graph' title='Graph View'>
+              <div id="treeWrapper" style={{ width: '100%', height: '50em' }}>
+                <EmployeeTree employees={tableData.nodes}/>
+              </div>
+            </Tab>
+          </Tabs>
+
           
           
           
-          <EmployeeTree employees={tableData.nodes}/>
+          
           </>
           
         )}

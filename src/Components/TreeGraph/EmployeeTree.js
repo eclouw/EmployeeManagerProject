@@ -8,9 +8,9 @@ function EmployeeTree({employees}){
 
     return(
         <>
-        <div id="treeWrapper" style={{ width: '50em', height: '20em' }}>
-            <Tree data={roots}/>
-        </div>
+        
+            <Tree data={roots} orientation="vertical" separation={{ siblings: 2, nonSiblings: 2 }}/>
+        
         </>
     )
 }
