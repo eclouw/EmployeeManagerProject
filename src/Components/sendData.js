@@ -1,7 +1,9 @@
 //Used to send data to the backend
 import axios from 'axios';
 
-const sendData = async(data, table) =>{
+//Status
+//1 for updating, 2 for creation, 3 for deletion
+const sendData = async(data, table, status) =>{
     const url="http://localhost";
     const port=5000;
     
@@ -16,8 +18,17 @@ const sendData = async(data, table) =>{
     }
 
     if (table == "employees"){
-        const response = await sendData(url+':'+port+"/api/employee/edit/submit", data);
-        return response;
+        if (status == 1){
+            const response = await sendData(url+':'+port+"/api/employee/edit/submit", data);
+            return response;
+        }else if (status == 2){
+            const response = await sendData(url+':'+port+'/api/employee/create/submit', data)
+            return response;
+        }else if (status == 3){
+            const response = await sendData(url+ ':'+port+'/api/employee/delete', data)
+            return response;
+        }
+        
         
     }
 }

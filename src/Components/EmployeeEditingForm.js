@@ -6,8 +6,7 @@ import Select from 'react-select';
 import React from 'react';
 import CryptoJS from 'crypto-js';
 
-function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees}){
-    
+function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees, editing, onDelete}){
     //States for the currently selected employee details
     const [inputEmployeeFirstName, setInputEmployeeFirstName] = useState('');
     const [inputEmployeeLastName, setInputEmployeeLastName] = useState('');
@@ -17,7 +16,6 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees}){
     const [inputEmployeeManager, setInputEmployeeManager] = useState([]);
     const [inputEmployeeBirthDate, setInputEmployeeBirthDate] = useState('');
     const [inputEmployeeEmailHash, setInputEmployeeEmailHash] = useState('');
-    console.log(roles);
 
     useEffect(()=>{
         if (selectedEmployee != undefined){
@@ -42,10 +40,13 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees}){
     }, [selectedEmployee])
 
     function onSendData(){
-      onSubmit(inputEmployeeFirstName, inputEmployeeLastName, inputEmployeeEmail, inputEmployeeManager, inputEmployeeSalary, inputEmployeeRole, inputEmployeeBirthDate);
+      onSubmit(inputEmployeeFirstName, inputEmployeeLastName, inputEmployeeEmail, inputEmployeeManager, inputEmployeeSalary, document.getElementById('input_role').value, inputEmployeeBirthDate);
     }
 
-    console.log("frome employee table", employees);
+    function onDeleteEmployee(){
+      onDelete(selectedEmployee.emp_number, selectedEmployee.line_manager);
+    }
+
 
     return(
         <div>
@@ -106,6 +107,9 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees}){
             </Brow>
             <Brow>
             <button onClick={onSendData}>Submit Changes</button>
+            {editing &&(
+            <button onClick={onDeleteEmployee}>Delete Employee</button>
+            )}
             </Brow>
           </Container>
         </div>
