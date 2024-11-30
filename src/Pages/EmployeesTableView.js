@@ -18,7 +18,6 @@ function EmployeesTableView(){
     const [tableData, setTableData] = useState({nodes : []})
     const [selectedEmployee, setSelectedEmployee] = useState([]);
     const [roleData, setRoleData] = useState([]);
-    const [noLineManagerEmployee, setNoLineManagerEmployee] = useState([]);
     
     //Create a template employee for no line manager to show correctly on table
     let noLineManager = {
