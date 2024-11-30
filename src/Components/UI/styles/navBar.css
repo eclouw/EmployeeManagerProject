@@ -1,10 +1,11 @@
 .navbar{
     width: 100%; /* Take up 100 percent screen width */
-    background: #1e1e1e; 
+    background: #0099ff; 
     display: flex; /* use flex layout */
     align-items: center; /* Align items to center of the navbar */
     padding: 20px; /* Add padding to the navbar */
     color: white;
+    margin-bottom: 3rem;
     
     
 }
@@ -29,7 +30,7 @@ nav ul li{
 }
 
 nav li:hover{
-    background-color: aqua; /*TODO CHANGE THIS COLOUR */
+    background-color: rgba(255, 255, 255, 0.288); /*TODO CHANGE THIS COLOUR */
 }
 
 nav a{
