@@ -10,6 +10,8 @@ import Card from 'react-bootstrap/Card';
 import sendData from '../Components/sendData';
 import employeeValidation from '../Components/Rules/employeeValidation';
 import Accordion from 'react-bootstrap/Accordion';
+import EmployeeTreeRootCreator from '../Components/TreeGraph/EmployeeTreeRootCreator';
+import EmployeeTree from '../Components/TreeGraph/EmployeeTree';
 
 
 function EmployeesTableView(){
@@ -63,6 +65,7 @@ function EmployeesTableView(){
             birthdate: employee.birthdate.split("T")[0],
         }));
         setTableData({ nodes: mappedData.concat(noLineManager) });
+        console.log("mapped data",mappedData);
         setLoadingEmployeeData(false);
         }
       }, [employeeData])
@@ -149,8 +152,9 @@ function EmployeesTableView(){
           
           
           
-          
+          <EmployeeTree employees={tableData.nodes}/>
           </>
+          
         )}
         <Accordion defaultActiveKey="0">
             <Accordion.Item eventKey='0'>
@@ -160,6 +164,7 @@ function EmployeesTableView(){
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
+          
         
     </div>
     );
