@@ -4,6 +4,8 @@ import getData from "../Components/getData";
 import sendData from "../Components/sendData";
 import EmployeeEditingForm from "../Components/EmployeeEditingForm";
 import { useState } from "react";
+import employeeValidation from "../Components/Rules/employeeValidation";
+
 function EmployeeCreator(){
     const [employeeData, setEmployeeData] = useState([]);
     const [roleData, setRoleData] = useState([]);
@@ -50,10 +52,12 @@ function EmployeeCreator(){
           birthdate: birthdate
         }
 
+        //Validate the employee details
+        if (employeeValidation(first_name, last_name, email, salary)){
+            createEmployee(newEmployee);
+            setEmployeeData((prevEmployeeData)=>[...prevEmployeeData, newEmployee]);
+        }
         
-        
-        createEmployee(newEmployee);
-        setEmployeeData((prevEmployeeData)=>[...prevEmployeeData, newEmployee]);
       }
 
       //UseEffect for once the employeeData is loaded or altered
