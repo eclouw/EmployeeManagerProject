@@ -3,8 +3,8 @@ import axios from "axios";
 
 
 const getData = async(table)=>{
-    const url="http://localhost";
-    const port=5000;
+    const url=process.env.REACT_APP_BACKEND_URL;
+    const port=process.env.REACT_APP_BACKEND_PORT;
 
     const data = async()=>{
         if (table=="employees"){

@@ -4,8 +4,8 @@ import axios from 'axios';
 //Status
 //1 for updating, 2 for creation, 3 for deletion
 const sendData = async(data, table, status) =>{
-    const url="http://localhost";
-    const port=5000;
+    const url=process.env.REACT_APP_BACKEND_URL;
+    const port=process.env.REACT_APP_BACKEND_PORT;
     
 
     const sendData=async(command, data)=>{
