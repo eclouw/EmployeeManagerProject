@@ -1,0 +1,40 @@
+.app-icon-row{
+    margin-left: 10rem;
+    margin-right: 10rem;
+}
+
+.input-box{
+    width: 50%;
+    margin-left: 1rem;
+    float:right;
+}
+.right-align{
+    float:right;
+    text-align: right;
+}
+
+.center-align{
+    align-items: center;
+    text-align: center;
+}
+
+.custom-line-manager{
+    float:right;
+    width: 50%;
+}
+
+.submit-button{
+    margin-top: 1rem;
+    background-color: green;
+    float:right;
+}
+
+.delete-button{
+    margin-top: 1rem;
+    background-color: red;
+}
+
+.create-button{
+    margin-top: 1rem;
+    width: 100%;
+}

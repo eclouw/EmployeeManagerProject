@@ -1,0 +1,39 @@
+.navbar{
+    width: 100%; /* Take up 100 percent screen width */
+    background: #0099ff; 
+    display: flex; /* use flex layout */
+    align-items: center; /* Align items to center of the navbar */
+    padding: 20px; /* Add padding to the navbar */
+    color: white;
+    margin-bottom: 3rem;
+    
+    
+}
+
+nav{
+    text-align: right; /* Align texts to the right */
+    display:inline-block;
+    width: 80%; /* Make sure that it takes up all of navbar so it can actually be aligned to the right */
+
+}
+
+nav ul{
+    list-style-type: none; /* Remove unordered list styling */
+    
+   
+}
+
+nav ul li{
+    margin-right: 20px; /* Add a right margin of 20px */
+    display: inline-block;
+    font-size: 20px;
+}
+
+nav li:hover{
+    background-color: rgba(255, 255, 255, 0.288); /*TODO CHANGE THIS COLOUR */
+}
+
+nav a{
+    color: white;
+    text-decoration: none;
+}
