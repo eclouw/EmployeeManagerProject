@@ -93,8 +93,18 @@ function EmployeesTableView(){
       
       let employee = {...employees[index]}
 
+      let editedEmployee = {
+        first_name : first_name,
+        last_name : last_name,
+        email : email,
+        salary: salary,
+        line_manager: newLineManager.emp_number,
+        emp_role: role,
+        raw_role: roleData.find((item)=> item.id == role),
+      }
+
       //Ensure that the employee details are valid
-      if (employeeValidation(first_name, last_name, email, salary, true)){
+      if (employeeValidation(editedEmployee, true)){
         //update the details in the data to what the user has inputed
         employee.first_name = first_name;
         employee.last_name = last_name;

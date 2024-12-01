@@ -46,7 +46,10 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees, edit
     }
 
     function onDeleteEmployee(){
-      onDelete(selectedEmployee.emp_number, selectedEmployee.line_manager);
+      if (window.confirm("Are you sure you want to delete employee: " + selectedEmployee.first_name + ' ' + selectedEmployee.last_name)){
+        onDelete(selectedEmployee.emp_number, selectedEmployee.line_manager);
+      }
+      
     }
 
 

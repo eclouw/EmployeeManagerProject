@@ -30,10 +30,34 @@ nav ul li{
 }
 
 nav li:hover{
-    background-color: rgba(255, 255, 255, 0.288); /*TODO CHANGE THIS COLOUR */
+    background-color: rgba(255, 255, 255, 0.288); 
 }
 
 nav a{
     color: white;
     text-decoration: none;
 }
+
+.button-nav{
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.application-list{
+    text-decoration: none;
+    list-style-type: none;
+}
+
+.application-list li{
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.application-list li:hover{
+    background-color: rgba(36, 113, 255, 0.288); 
+}
+
+.application-list Link{
+    text-decoration: none;
+}   

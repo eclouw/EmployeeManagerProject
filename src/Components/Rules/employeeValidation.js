@@ -1,7 +1,7 @@
 
 //Handles employee validation as well as outputting a popup to the user explaining what is wrong if popup is set to true
 //TODO: IMPLEMENT POPUP
-const employeeValidation = (firstName, lastName, email, salary, popup) =>{
+const employeeValidation = (employee, popup) =>{
 
     //Ensure that the name is a string with length greater than 0 and less than 50 and does not contain numbers
     //Validation rules are the same for first and last name
@@ -10,7 +10,9 @@ const employeeValidation = (firstName, lastName, email, salary, popup) =>{
             return true;
             
         }else{
-            
+            if (popup){
+                window.alert("Ensure that the employee name contains text and is less than or equal to 50 characters and does not contain any numbers");
+            }
             return false;
         }
     }
@@ -20,7 +22,7 @@ const employeeValidation = (firstName, lastName, email, salary, popup) =>{
         if (typeof email == "string" && email.length > 0 && email.length <= 50){
             return true;
         }else{
-            
+            window.alert("Ensure that the email is less than or equal to 50 characters");
             return false;
         }
     }
@@ -31,8 +33,22 @@ const employeeValidation = (firstName, lastName, email, salary, popup) =>{
             
             return true;
         }else{
-            
+            window.alert("Ensure that the salary is a number");
             return false;
+        }
+    }
+
+    function validManager(manager, role){
+        if (role.has_superior){
+            if (manager){
+                return true;
+            }else{
+                window.alert("The selected role requires a line manager");
+                return false;
+                
+            }
+        }else{
+            return true;
         }
     }
 
@@ -48,7 +64,7 @@ const employeeValidation = (firstName, lastName, email, salary, popup) =>{
 
     
 
-    return (validName(firstName) && validName(lastName) && validEmail(email) && validSalary(salary));
+    return (validName(employee.first_name) && validName(employee.last_name) && validEmail(employee.email) && validSalary(employee.salary) && validManager(employee.line_manager, employee.raw_role));
 }
 
 export default employeeValidation;
