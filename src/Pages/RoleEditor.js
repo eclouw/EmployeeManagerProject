@@ -18,14 +18,16 @@ function RoleEditor(){
 
     //Get the role data from the backend
     useEffect(()=> {
-        const fetchRoleData = async()=>{
-            const roles = await getData("roles");
-            console.log("roles", roles);
-            setRoleData(roles);
-        }
+        
 
         fetchRoleData();
     }, [])
+
+    const fetchRoleData = async()=>{
+        const roles = await getData("roles");
+        console.log("roles", roles);
+        setRoleData(roles);
+    }
 
     useEffect(()=>{
         if (roleData.length > 0 && Array.isArray(roleData)){
@@ -65,14 +67,26 @@ function RoleEditor(){
     //Create a new role
     function createNewRole(){
         if (roleValidation(newRoleName, newRoleDescription, roleData, -1, true)){
-
+            let newRole = {
+                role_name: newRoleName,
+                role_description: newRoleDescription,
+                id: editedRoleData.length +1,
+            }
+            sendNewRoleData(newRole);
+            
         }else{
             console.log('invalid role')
         }
     }
 
+    const sendNewRoleData = async(data)=>{
+        const res = await sendData(data, "roles", 2);
+        fetchRoleData();
+    }
+
     const sendUpdatedRoleData= async(data)=>{
-        sendData(data, "roles", 1);
+        const res = await sendData(data, "roles", 1);
+        fetchRoleData();
     }
 
     return(
@@ -111,21 +125,41 @@ function RoleEditor(){
                                         <>
                                         <b>This role is a special role and only the description may be edited. Employees that do not have a role are assigned this role.</b>
                                         </>
+                                    ): role.has_superior==false ? (
+                                        <>
+                                        <b>This role is a special role and may not be edited. This role is the head of the company.</b>
+                                        </>
+                                        
                                     ): (
+                                        <>
                                         <p><b>Name</b>
                                         <input type="text" defaultValue={role.role_name} onChange={(e)=> updateEditedData(role.id, 'role_name', e.target.value)} style={{marginLeft: '1rem'}}/>
                                         </p>
+                                        </>
                                     )}
                                     
                                 </Row>
                                 
                                 <Row>
-                                    <p><b>Description</b></p>
-                                    <textarea value={role.role_description} onChange={(e)=> updateEditedData(role.id, 'role_description', e.target.value)} rows={3} cols={50} style={{marginBottom: '1rem'}}/>
+                                    {role.has_superior == false ? (
+                                        <></>
+                                    ):(
+                                        <>
+                                        <p><b>Description</b></p>
+                                        <textarea value={role.role_description} onChange={(e)=> updateEditedData(role.id, 'role_description', e.target.value)} rows={3} cols={50} style={{marginBottom: '1rem'}}/>
+                                        </>
+                                    )}
+                                    
                                     
                                 </Row>
                                 <Row>
-                                    <Button onClick={()=> updateRole(role.id)}>Submit Changes</Button>
+                                    {role.has_superior == false ? (
+                                        <>
+                                        </>
+                                    ): (
+                                        <Button onClick={()=> updateRole(role.id)}>Submit Changes</Button>
+                                    )}
+                                    
                                 </Row>
                             </Accordion.Body>
                         </Accordion.Item>

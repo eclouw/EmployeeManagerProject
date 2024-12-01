@@ -155,6 +155,23 @@ app.post('/api/role/edit/submit', async (req, res)=>{
     }
 })
 
+app.post('/api/role/create/submit', async (req, res)=>{
+    console.log('Creating new role');
+    const {role_name, role_description} = req.body;
+    console.log('Received role name:', role_name);
+    console.log('Recieved role description', role_description);
+
+    try{
+        const query = "INSERT INTO public.roles (role_name, role_description) VALUES ($1, $2)";
+        const queryResult = await pgData.query(query, [role_name, role_description]);
+        console.log(queryResult);
+        res.json({message: 'Role Created', recievedData: req.body});
+    }catch(error){
+        console.error('Error executng query:', error);
+        result.status(500).json({error: 'Error with query'});
+    }
+})
+
 
 
 //start server
