@@ -5,6 +5,7 @@ import EmployeeCreator from './Pages/EmployeeCreator';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import HomePage from './Pages/HomePage';
 import NavBar from './Components/UI/NavBar';
+import RoleEditor from './Pages/RoleEditor';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path="/" element={<HomePage/>}/>
         <Route path="/edit/Employee" element={<EmployeesTableView/>}/>
         <Route path="/create/Employee" element={<EmployeeCreator/>}/>
+        <Route path="/edit/Roles" element={<RoleEditor/>}/>
       </Routes>
       </div>
     </BrowserRouter>
