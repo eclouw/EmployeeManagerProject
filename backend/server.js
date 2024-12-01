@@ -84,6 +84,7 @@ app.post('/api/employee/edit/submit', async (req, res)=>{
     }
 })
 
+//Deleting an employee
 app.post('/api/employee/delete', async (req, res)=>{
     console.log('Deleteing employee');
     const {emp_number, line_manager} = req.body;
@@ -104,6 +105,7 @@ app.post('/api/employee/delete', async (req, res)=>{
     
 })
 
+//Creating an employee
 app.post('/api/employee/create/submit', async (req, res)=>{
     console.log('Creating new employee');
     const {first_name, last_name, email, emp_role, line_manager, salary, birthdate} = req.body;
@@ -123,7 +125,7 @@ app.post('/api/employee/create/submit', async (req, res)=>{
             
         }else{
             try{
-                const query = "INSERT INTO public.employees (first_name, last_name, email, emp_role, line_manager, salary, birthdate) VALUES ($1, $2, $3, $4, $5, $6, $7)";
+            const query = "INSERT INTO public.employees (first_name, last_name, email, emp_role, line_manager, salary, birthdate) VALUES ($1, $2, $3, $4, $5, $6, $7)";
             const queryResult = await pgData.query(query, [first_name, last_name, email, emp_role, line_manager, salary, birthdate]);
             console.log(queryResult);
             res.json({message: 'Employee Created', recievedData: req.body});
@@ -133,10 +135,62 @@ app.post('/api/employee/create/submit', async (req, res)=>{
             }
             
         }
-        
-        
-        
-    
+
+})
+
+app.post('/api/role/edit/submit', async (req, res)=>{
+    console.log('Editing role');
+    const {role_name, role_description, id} = req.body;
+    console.log('Received role name:', role_name);
+    console.log('Recieved role description', role_description);
+
+    try{
+        const query = "UPDATE public.roles SET role_name = $1, role_description = $2 WHERE id = $3";
+        const queryResult = await pgData.query(query, [role_name, role_description, id]);
+        console.log(queryResult);
+        res.json({message: 'Role Edited', recievedData: req.body});
+    }catch(error){
+        console.error('Error executng query:', error);
+        result.status(500).json({error: 'Error with query'});
+    }
+})
+
+app.post('/api/role/create/submit', async (req, res)=>{
+    console.log('Creating new role');
+    const {role_name, role_description} = req.body;
+    console.log('Received role name:', role_name);
+    console.log('Recieved role description', role_description);
+
+    try{
+        const query = "INSERT INTO public.roles (role_name, role_description) VALUES ($1, $2)";
+        const queryResult = await pgData.query(query, [role_name, role_description]);
+        console.log(queryResult);
+        res.json({message: 'Role Created', recievedData: req.body});
+    }catch(error){
+        console.error('Error executng query:', error);
+        result.status(500).json({error: 'Error with query'});
+    }
+})
+
+app.post('/api/role/delete/submit', async(req, res)=>{
+    console.log('Deleting role');
+    const {id} = req.body;
+    console.log('Received role id:', id);
+    try{
+        //First make all employees with this role unassigned
+        const empQuery = "UPDATE public.employees SET emp_role = (SELECT id FROM public.roles WHERE unassigned = true LIMIT 1) WHERE emp_role = $1";
+        const queryResultEmp = await pgData.query(empQuery, [id]);
+        console.log(queryResultEmp);
+
+        //Then delete the role
+        const query = "DELETE FROM public.roles WHERE id = $1";
+        const queryResult = await pgData.query(query, [id]);
+        console.log(queryResult);
+        res.json({message: 'Role Deleted', recievedData: req.body});
+    }catch(error){
+        console.error('Error executng query:', error);
+        result.status(500).json({error: 'Error with query'});
+    }
 })
 
 
