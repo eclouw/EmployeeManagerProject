@@ -16,7 +16,7 @@ function HomePage(){
                     <Col>
                     </Col>
                     <Col className='app-icon-col'>
-                        <Card style={{ width: '100%', height: '40rem'}}>
+                        <Card style={{ width: '100%', height: '35rem'}}>
                             <Card.Img variant='top' src='/images/emp_new_icon.jpg'/>
                             <Card.Body className="d-flex flex-column justify-content-between">
                                 <Card.Title>
@@ -32,7 +32,7 @@ function HomePage(){
                         </Card>
                     </Col>
                     <Col className='app-icon-col'>
-                    <Card style={{ width: '100%' , height: '40rem'}}>
+                    <Card style={{ width: '100%' , height: '35rem'}}>
                             <Card.Img variant='top' src='/images/emp_edit_icon.jpg'/>
                             <Card.Body className="d-flex flex-column justify-content-between">
                                 <Card.Title>
@@ -43,6 +43,22 @@ function HomePage(){
                                 </Card.Text>
                                 <Link to="/edit/employee">
                                     <Button variant="primary" style={{width: '100%'}}>Edit Employees</Button>
+                                </Link>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <Col className='app-icon-col'>
+                    <Card style={{ width: '100%' , height: '35rem'}}>
+                            <Card.Img variant='top' src='/images/role_edit_icon.png'/>
+                            <Card.Body className="d-flex flex-column justify-content-between">
+                                <Card.Title>
+                                    <p>Edit Roles</p>
+                                </Card.Title>
+                                <Card.Text>
+                                    Click the button below to navigate to the page for editing employee roles
+                                </Card.Text>
+                                <Link to="/edit/Roles">
+                                    <Button variant="primary" style={{width: '100%'}}>Edit Roles</Button>
                                 </Link>
                             </Card.Body>
                         </Card>

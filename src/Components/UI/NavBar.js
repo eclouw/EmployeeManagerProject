@@ -16,7 +16,7 @@ function NavBar(){
             <h1>eclouw</h1>
             <nav>
                 <ul>
-                    <li><Link to ="/">Home</Link></li>
+                    <li><Link to ="/"><Button variant="link" className="button-nav">Home</Button></Link></li>
                     <li><Button onClick={handleShow} variant="link" className="button-nav">Applications</Button></li>
                 </ul>
             </nav>
