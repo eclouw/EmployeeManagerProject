@@ -38,6 +38,20 @@ const employeeValidation = (employee, popup) =>{
         }
     }
 
+    function validManager(manager, role){
+        if (role.has_superior){
+            if (manager){
+                return true;
+            }else{
+                window.alert("The selected role requires a line manager");
+                return false;
+                
+            }
+        }else{
+            return true;
+        }
+    }
+
     function isNumber(string){
         const number = parseFloat(string);
         return Number.isNaN(number) ? false : true;
@@ -50,7 +64,7 @@ const employeeValidation = (employee, popup) =>{
 
     
 
-    return (validName(employee.first_name) && validName(employee.last_name) && validEmail(employee.email) && validSalary(employee.salary));
+    return (validName(employee.first_name) && validName(employee.last_name) && validEmail(employee.email) && validSalary(employee.salary) && validManager(employee.line_manager, employee.raw_role));
 }
 
 export default employeeValidation;

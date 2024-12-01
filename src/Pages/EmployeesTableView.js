@@ -100,6 +100,7 @@ function EmployeesTableView(){
         salary: salary,
         line_manager: newLineManager.emp_number,
         emp_role: role,
+        raw_role: roleData.find((item)=> item.id == role),
       }
 
       //Ensure that the employee details are valid

@@ -50,9 +50,10 @@ function EmployeeCreator(){
           line_manager: lineManager.emp_number,
           salary: salary,
           emp_role: role,
-          birthdate: birthdate
+          birthdate: birthdate,
+          raw_role: roleData.find((item)=> item.id == role),
         }
-        console.log(lineManager.emp_number);
+        console.log(newEmployee.raw_role);
         //Validate the employee details
         if (employeeValidation(newEmployee, true)){
             createEmployee(newEmployee);
