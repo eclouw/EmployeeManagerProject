@@ -24,7 +24,7 @@ function EmployeeTreeRootCreator(employees){
 
     if (root.length > 1){
         return{
-            name: "Oraganisation",
+            name: "Organisation",
             children: root,
         }
     }
