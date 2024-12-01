@@ -141,6 +141,7 @@ function EmployeeTable({data,  onSelection, roles}){
       console.log('filter');
       setFilterItem(document.getElementById('filter_select').value)
       console.log(filterItem);
+      console.log(filteredData);
       
         if (filterItem == 'first_name'){
           setFilteredData({
@@ -149,6 +150,18 @@ function EmployeeTable({data,  onSelection, roles}){
         }else if (filterItem == 'last_name'){
           setFilteredData({
             nodes: data.nodes.filter((item) => item.last_name.toLowerCase().includes(filterTerm.toLowerCase()))
+          })
+        }else if (filterItem == 'emp_number'){
+          setFilteredData({
+            nodes: data.nodes.filter((item) => item.emp_number > 0 && item.emp_number.toString().toLowerCase().includes(filterTerm.toLowerCase()))
+          })
+        }else if (filterItem == 'role_name'){
+          setFilteredData({
+            nodes: data.nodes.filter((item) => typeof item.role_name == 'string' && item.role_name.toLowerCase().includes(filterTerm.toLowerCase()))
+          })
+        }else if (filterItem == 'manager_name'){
+          setFilteredData({
+            nodes: data.nodes.filter((item) => typeof item.manager_name == 'string' && item.manager_name.toLowerCase().includes(filterTerm.toLowerCase()))
           })
         }
       
