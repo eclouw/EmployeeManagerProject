@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import roleValidation from '../Components/Rules/roleValidation';
+import sendData from '../Components/sendData';
 
 function RoleEditor(){
     const [roleData, setRoleData] = useState([]);
@@ -36,7 +37,7 @@ function RoleEditor(){
     function updateRole(id){
         const updatedRole = editedRoleData.find((role)=> role.id === id);
         if (roleValidation(updatedRole.role_name, updatedRole.role_description, roleData, id, true)){
-            console.log(updatedRole);
+            sendUpdatedRoleData(updatedRole);
         }else{
             console.log('invalid role')
         }
@@ -61,12 +62,17 @@ function RoleEditor(){
         setFilterText(value);
     }
 
+    //Create a new role
     function createNewRole(){
         if (roleValidation(newRoleName, newRoleDescription, roleData, -1, true)){
 
         }else{
             console.log('invalid role')
         }
+    }
+
+    const sendUpdatedRoleData= async(data)=>{
+        sendData(data, "roles", 1);
     }
 
     return(

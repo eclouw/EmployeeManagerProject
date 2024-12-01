@@ -30,6 +30,16 @@ const sendData = async(data, table, status) =>{
         }
         
         
+    }else if (table == "roles"){
+        if (status == 1){
+            const response = await sendData(url+ ':'+port+"/api/role/edit/submit", data);
+            console.log(response);
+            return response;
+        }else if (status == 2){
+
+        }else if (status == 3){
+
+        }
     }
 }
 
