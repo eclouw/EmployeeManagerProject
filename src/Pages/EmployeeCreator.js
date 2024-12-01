@@ -5,6 +5,7 @@ import sendData from "../Components/sendData";
 import EmployeeEditingForm from "../Components/EmployeeEditingForm";
 import { useState } from "react";
 import employeeValidation from "../Components/Rules/employeeValidation";
+import Spinner from 'react-bootstrap/Spinner';
 
 function EmployeeCreator(){
     const [employeeData, setEmployeeData] = useState([]);
@@ -105,10 +106,12 @@ function EmployeeCreator(){
 
     return (
         <div className = "Employee Creator">
-            { loadingData == false &&(
+            { loadingData == false ?(
                 <>
                 <EmployeeEditingForm selectedEmployee={newEmployeeData} onSubmit={createNewEmployee} roles={roleData} employees={editingFormEmployeeData}/>
                 </>
+            ):(
+                <Spinner animation="border" role="status"></Spinner>
             )}
         </div>
     )
