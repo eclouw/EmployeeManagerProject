@@ -10,7 +10,9 @@ const employeeValidation = (firstName, lastName, email, salary, popup) =>{
             return true;
             
         }else{
-            
+            if (popup){
+                window.alert("Ensure that the employee name contains text and is less than or equal to 50 characters and does not contain any numbers");
+            }
             return false;
         }
     }
@@ -20,7 +22,7 @@ const employeeValidation = (firstName, lastName, email, salary, popup) =>{
         if (typeof email == "string" && email.length > 0 && email.length <= 50){
             return true;
         }else{
-            
+            window.alert("Ensure that the email is less than or equal to 50 characters");
             return false;
         }
     }
@@ -31,7 +33,7 @@ const employeeValidation = (firstName, lastName, email, salary, popup) =>{
             
             return true;
         }else{
-            
+            window.alert("Ensure that the salary is a number");
             return false;
         }
     }
