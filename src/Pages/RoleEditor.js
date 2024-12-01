@@ -79,6 +79,22 @@ function RoleEditor(){
         }
     }
 
+    //Delete a role
+    function deleteRole(id, name){
+        if (window.confirm("Are you sure you want to delete role: " + name)){
+            let delData = {
+                id: id,
+            }
+            sendDeletionData(delData);
+        }
+    }
+
+    //Async functions to ensure that role data is fetched after changes have been made and confirmed by server
+    const sendDeletionData = async(data)=>{
+        const res = await sendData(data, "roles", 3);
+        fetchRoleData();
+    }
+
     const sendNewRoleData = async(data)=>{
         const res = await sendData(data, "roles", 2);
         fetchRoleData();
@@ -157,7 +173,11 @@ function RoleEditor(){
                                         <>
                                         </>
                                     ): (
-                                        <Button onClick={()=> updateRole(role.id)}>Submit Changes</Button>
+                                        <Col>
+                                        <Button onClick={()=> updateRole(role.id)} className='submit-button'>Submit Changes</Button>
+                                        <Button onClick={()=> deleteRole(role.id, role.role_name)} className='delete-button'>Delete Role</Button>
+                                        </Col>
+                                        
                                     )}
                                     
                                 </Row>

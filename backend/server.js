@@ -172,6 +172,27 @@ app.post('/api/role/create/submit', async (req, res)=>{
     }
 })
 
+app.post('/api/role/delete/submit', async(req, res)=>{
+    console.log('Deleting role');
+    const {id} = req.body;
+    console.log('Received role id:', id);
+    try{
+        //First make all employees with this role unassigned
+        const empQuery = "UPDATE public.employees SET emp_role = (SELECT id FROM public.roles WHERE unassigned = true LIMIT 1) WHERE emp_role = $1";
+        const queryResultEmp = await pgData.query(empQuery, [id]);
+        console.log(queryResultEmp);
+
+        //Then delete the role
+        const query = "DELETE FROM public.roles WHERE id = $1";
+        const queryResult = await pgData.query(query, [id]);
+        console.log(queryResult);
+        res.json({message: 'Role Deleted', recievedData: req.body});
+    }catch(error){
+        console.error('Error executng query:', error);
+        result.status(500).json({error: 'Error with query'});
+    }
+})
+
 
 
 //start server

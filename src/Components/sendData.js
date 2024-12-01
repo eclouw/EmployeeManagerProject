@@ -41,6 +41,9 @@ const sendData = async(data, table, status) =>{
             return response;
 
         }else if (status == 3){
+            const response = await sendData(url+':'+port+"/api/role/delete/submit", data);
+            console.log(response);
+            return response;
 
         }
     }
