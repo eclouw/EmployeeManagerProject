@@ -54,7 +54,7 @@ function EmployeeCreator(){
         }
 
         //Validate the employee details
-        if (employeeValidation(first_name, last_name, email, salary)){
+        if (employeeValidation(first_name, last_name, email, salary, true)){
             createEmployee(newEmployee);
             setEmployeeData((prevEmployeeData)=>[...prevEmployeeData, newEmployee]);
         }
