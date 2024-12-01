@@ -52,9 +52,9 @@ function EmployeeCreator(){
           emp_role: role,
           birthdate: birthdate
         }
-
+        console.log(lineManager.emp_number);
         //Validate the employee details
-        if (employeeValidation(first_name, last_name, email, salary, true)){
+        if (employeeValidation(newEmployee, true)){
             createEmployee(newEmployee);
             setEmployeeData((prevEmployeeData)=>[...prevEmployeeData, newEmployee]);
         }
