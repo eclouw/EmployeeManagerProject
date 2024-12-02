@@ -1,7 +1,9 @@
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import axios from 'axios';
+import '../Components/UI/styles/styles.css'
 
+//Log the user in
 async function loginUser(details){
     try{
         const token = await axios.post(process.env.REACT_APP_BACKEND_URL + ':' + process.env.REACT_APP_BACKEND_PORT+'/login', details);
@@ -16,6 +18,7 @@ function Login({setToken}){
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
 
+    //When the user clicks the submit/login button
     const handleSubmit = async e=>{
         e.preventDefault();
         const token = await loginUser({
@@ -32,12 +35,13 @@ function Login({setToken}){
 
     return(
         <div className='login-page'>
-            <h1>Please Log In</h1>
+            
         <form>
-            <label><p>Username</p>
-            <input type="text" onChange={e => setUserName(e.target.value)}/></label>
-            <label><p>Password</p>
-            <input type="password" onChange={e => setPassword(e.target.value)}/></label>
+        <h1>Please Log In</h1>
+            <p>Username
+            <input type="text" onChange={e => setUserName(e.target.value)} style={{marginLeft: '1rem'}}/></p>
+            <p>Password
+            <input type="password" onChange={e => setPassword(e.target.value)} style={{marginLeft: '1rem'}}/></p>
             <div>
                 <Button onClick={handleSubmit}>Submit</Button>
             </div>
