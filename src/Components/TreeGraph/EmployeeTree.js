@@ -120,7 +120,7 @@ function EmployeeTree({employees, nodeClick}){
     return(
         <>
             
-            {roots ?(
+            {roots.length  != 0 ?(
                 <Tree data={roots} orientation="vertical" separation={{ siblings: 2, nonSiblings: 2 }} renderCustomNodeElement={customNodes} pathFunc="step"/>
             ):(
                 <p>loading</p>
