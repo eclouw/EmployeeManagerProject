@@ -42,7 +42,10 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees, edit
     }, [selectedEmployee])
 
     function onSendData(){
-      onSubmit(inputEmployeeFirstName, inputEmployeeLastName, inputEmployeeEmail, inputEmployeeManager, inputEmployeeSalary, document.getElementById('input_role').value, inputEmployeeBirthDate);
+      if (inputEmployeeManager){
+        onSubmit(inputEmployeeFirstName, inputEmployeeLastName, inputEmployeeEmail, inputEmployeeManager, inputEmployeeSalary, document.getElementById('input_role').value, inputEmployeeBirthDate);
+      }
+      
     }
 
     function onDeleteEmployee(){
@@ -55,6 +58,10 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees, edit
 
     return(
         <div>
+          {selectedEmployee.emp_number > 0 && (
+            <p>Editing employee with id: {selectedEmployee.emp_number}</p>
+          )}
+          
           <Container>
           {inputEmployeeEmail && editing &&(
             <img src={'https://gravatar.com/avatar/'+inputEmployeeEmailHash}/>
