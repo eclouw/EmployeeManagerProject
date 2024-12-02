@@ -17,10 +17,7 @@ function EmployeeCreator(){
     //Get the role data, employee data, and create a template employee
     useEffect(()=> {
         setLoadingData(true);
-        const fetchEmployeeData = async()=>{
-            const employees = await getData("employees");
-            setEmployeeData(employees);
-        }
+        
         const fetchRoleData = async()=>{
             const roles = await getData("roles");
             setRoleData(roles);
@@ -41,8 +38,14 @@ function EmployeeCreator(){
         createNewEmployeeData();
     }, [])
 
+    const fetchEmployeeData = async()=>{
+        const employees = await getData("employees");
+        setEmployeeData(employees);
+    }
+
     //Function for creating a new employee
     function createNewEmployee(first_name, last_name, email, lineManager, salary, role, birthdate){
+        console.log(lineManager);
         let newEmployee = {
           first_name: first_name, 
           last_name: last_name,
@@ -53,7 +56,6 @@ function EmployeeCreator(){
           birthdate: birthdate,
           raw_role: roleData.find((item)=> item.id == role),
         }
-        console.log(newEmployee.raw_role);
         //Validate the employee details
         if (employeeValidation(newEmployee, true)){
             createEmployee(newEmployee);
@@ -90,7 +92,8 @@ function EmployeeCreator(){
           //Create new employee by sending the data to the backend
         const createEmployee = async(data)=>{
             resetNewEmployee();
-            sendData(data, "employees", 2);
+            const res = await sendData(data, "employees", 2);
+            fetchEmployeeData()
       }
 
       function resetNewEmployee(){

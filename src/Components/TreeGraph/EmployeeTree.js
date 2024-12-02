@@ -1,12 +1,18 @@
 import EmployeeTreeRootCreator from "./EmployeeTreeRootCreator";
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Tree from 'react-d3-tree';
 
 function EmployeeTree({employees, nodeClick}){
-    
+    const [roots, setRoots] = useState([]);
 
-    //Generate the TreeRoots
-    const roots = EmployeeTreeRootCreator(employees);
+    useEffect(()=>{
+        setRoots(EmployeeTreeRootCreator(employees));
+    }, [])
+
+    useEffect(()=>{
+        setRoots(EmployeeTreeRootCreator(employees));
+    }, [employees])
+
 
     const handleNodeClick = (nodeData, e)=>{
         console.log("you clicked", nodeData);
@@ -108,39 +114,18 @@ function EmployeeTree({employees, nodeClick}){
         </g>
         )
     }
-        
-    let filterTypes = [{
-        filter_label: 'First Name',
-        filter_value: 'first_name', 
-      },
-      {
-        filter_label: 'Last Name',
-        filter_value: 'last_name',
-      },
-      {
-        filter_label: 'Employee Number',
-        filter_value: 'emp_number',
-        
-      },
-      {
-        filter_label: 'Role',
-        filter_value: 'role_name',
-        
-      },
-      {
-        filter_label: 'Line Manager',
-        filter_value: 'manager_name',
-        
-      },
-  ]
 
     
     
     return(
         <>
             
-        
-            <Tree data={roots} orientation="vertical" separation={{ siblings: 2, nonSiblings: 2 }} renderCustomNodeElement={customNodes} pathFunc="step"/>
+            {roots.length  != 0 ?(
+                <Tree data={roots} orientation="vertical" separation={{ siblings: 2, nonSiblings: 2 }} renderCustomNodeElement={customNodes} pathFunc="step"/>
+            ):(
+                <p>loading</p>
+            )}
+            
         
 
         

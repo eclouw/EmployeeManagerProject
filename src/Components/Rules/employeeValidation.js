@@ -1,6 +1,5 @@
 
 //Handles employee validation as well as outputting a popup to the user explaining what is wrong if popup is set to true
-//TODO: IMPLEMENT POPUP
 const employeeValidation = (employee, popup) =>{
 
     //Ensure that the name is a string with length greater than 0 and less than 50 and does not contain numbers
@@ -41,12 +40,34 @@ const employeeValidation = (employee, popup) =>{
     function validManager(manager, role){
         if (role.has_superior){
             if (manager){
-                return true;
+                if (employee.emp_number){
+                    if (employee.emp_number == manager){
+                        window.alert("Can not set line manager to itself");
+                        console.log(employee.birthdate);
+                        return false;
+                    }else{
+                        return true;
+                    }
+                }else{
+                    return true;
+                }
             }else{
                 window.alert("The selected role requires a line manager");
                 return false;
                 
             }
+        }else{
+            return true;
+        }
+    }
+
+    function validBirthDate(){
+        const date = new Date(employee.birthdate);
+        const today = new Date();
+
+        if (date > today){
+            window.alert("The birthday of the employee can not be set to the future");
+            return false;
         }else{
             return true;
         }
@@ -64,7 +85,7 @@ const employeeValidation = (employee, popup) =>{
 
     
 
-    return (validName(employee.first_name) && validName(employee.last_name) && validEmail(employee.email) && validSalary(employee.salary) && validManager(employee.line_manager, employee.raw_role));
+    return (validName(employee.first_name) && validName(employee.last_name) && validEmail(employee.email) && validSalary(employee.salary) && validManager(employee.line_manager, employee.raw_role) && validBirthDate());
 }
 
 export default employeeValidation;

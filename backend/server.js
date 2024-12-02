@@ -57,11 +57,16 @@ app.post('/api/employee/edit/submit', async (req, res)=>{
     const {first_name, last_name, email, emp_number, emp_role, line_manager, salary, birthdate} = req.body;
     console.log('Receieved first name:', first_name)
     console.log('Recieved last name', last_name)
-
+    //First update the employees that this employee manages so that they get the line manager of the employee being edited
+    const upQuery = "UPDATE public.employees SET line_manager = (SELECT line_manager FROM public.employees WHERE emp_number = $1) WHERE line_manager = $1"
+    const upQueryResult = await pgData.query(upQuery, [emp_number]);
+    console.log(upQueryResult);
     
 
-    //update the first name, last name, and email
+    
     try{
+        
+
         const query = "UPDATE public.employees SET first_name = $1, last_name = $2, email = $3, emp_role = $5, line_manager = $6, salary = $7, birthdate = $8 WHERE emp_number = $4";
         const queryResult = await pgData.query(query, [first_name, last_name, email, emp_number, emp_role, line_manager, salary, birthdate]);
         console.log(queryResult);
