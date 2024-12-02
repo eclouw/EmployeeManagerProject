@@ -6,11 +6,11 @@ import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import '../Components/UI/styles/styles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-function HomePage(){
-
+function HomePage({token}){
+    console.log(token);
     return(
         <div className="HomePage">
-            <h1>Welcome</h1>
+            <h1>Welcome, {token}</h1>
             <Container >
                 <Row style={{height: '18rem', margin: '0'}} className='app-icon-row'>
                     <Col>

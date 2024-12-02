@@ -189,8 +189,7 @@ app.use('/login', async(req, res)=>{
         console.log(queryResult);
         if (queryResult.rows.length > 0){
             res.send({
-                token: 'loggedIn',
-                username: username,
+                token: username,
             })
         }else{
             res.status(500).json({error: 'No user found'});

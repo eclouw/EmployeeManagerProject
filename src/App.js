@@ -14,17 +14,17 @@ import useToken from './Components/useToken';
 
 function App() {
   const {token, setToken} = useToken();
-
   if (!token){
     return <Login setToken={setToken}/>
   }
+  
   return (
     <>
     <BrowserRouter>
     <NavBar/>
-    <div class="container">
+    <div className="container">
       <Routes>
-      <Route path="/" element={<HomePage/>}/>
+      <Route path="/" element={<HomePage token={token}/>}/>
       <Route path="/login" element={<Login/>}/>
         <Route path="/edit/Employee" element={<EmployeesTableView/>}/>
         <Route path="/create/Employee" element={<EmployeeCreator/>}/>

@@ -10,14 +10,21 @@ function NavBar(){
 
     const handleShow = ()=> setShowApplicationList(true);
     const handleClose = ()=> setShowApplicationList(false);
+
+    //Function for logging the user out
+    function logOut(){
+        localStorage.clear();
+        window.location.reload();
+    }
     return(
         <>
-        <div class="navbar">
+        <div className="navbar">
             <h1>eclouw</h1>
             <nav>
                 <ul>
                     <li><Link to ="/"><Button variant="link" className="button-nav">Home</Button></Link></li>
                     <li><Button onClick={handleShow} variant="link" className="button-nav">Applications</Button></li>
+                    <li><Button onClick={logOut} variant="link" className="button-nav">Log out</Button></li>
                 </ul>
             </nav>
         </div>
