@@ -207,5 +207,5 @@ app.use('/login', async(req, res)=>{
 
 //start server
 app.listen(PORT, () =>{
-    console.log('Server is up');
+    console.log('Server is up on port ' + PORT);
 });
