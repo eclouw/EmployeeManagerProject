@@ -102,6 +102,7 @@ function EmployeesTableView(){
         line_manager: newLineManager.emp_number,
         emp_role: role,
         raw_role: roleData.find((item)=> item.id == role),
+        birthdate : birthdate,
       }
 
       //Ensure that the employee details are valid

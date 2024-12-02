@@ -53,7 +53,6 @@ function EmployeeCreator(){
           birthdate: birthdate,
           raw_role: roleData.find((item)=> item.id == role),
         }
-        console.log(newEmployee.raw_role);
         //Validate the employee details
         if (employeeValidation(newEmployee, true)){
             createEmployee(newEmployee);
