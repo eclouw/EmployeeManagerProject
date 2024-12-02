@@ -37,6 +37,7 @@ const employeeValidation = (employee, popup) =>{
         }
     }
 
+    //Manager Validation
     function validManager(manager, role){
         if (role.has_superior){
             if (manager){
@@ -61,6 +62,7 @@ const employeeValidation = (employee, popup) =>{
         }
     }
 
+    //Make sure that the employee birthdate is not set to the future
     function validBirthDate(){
         const date = new Date(employee.birthdate);
         const today = new Date();
@@ -73,6 +75,7 @@ const employeeValidation = (employee, popup) =>{
         }
     }
 
+    //Check if a string can be converted to a number
     function isNumber(string){
         const number = parseFloat(string);
         return Number.isNaN(number) ? false : true;

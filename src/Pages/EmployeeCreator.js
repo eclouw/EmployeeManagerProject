@@ -38,6 +38,7 @@ function EmployeeCreator(){
         createNewEmployeeData();
     }, [])
 
+    //Fetch employee data from the backend
     const fetchEmployeeData = async()=>{
         const employees = await getData("employees");
         setEmployeeData(employees);
@@ -96,6 +97,7 @@ function EmployeeCreator(){
             fetchEmployeeData()
       }
 
+      //Reset new employee details to empty values
       function resetNewEmployee(){
         setNewEmployeeData({
             first_name: '',

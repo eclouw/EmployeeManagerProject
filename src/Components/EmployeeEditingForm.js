@@ -41,6 +41,7 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees, edit
         }
     }, [selectedEmployee])
 
+    //When the user clicks the submit button
     function onSendData(){
       if (inputEmployeeManager){
         onSubmit(inputEmployeeFirstName, inputEmployeeLastName, inputEmployeeEmail, inputEmployeeManager, inputEmployeeSalary, document.getElementById('input_role').value, inputEmployeeBirthDate);
@@ -48,6 +49,7 @@ function EmployeeEditingForm({selectedEmployee, onSubmit, roles, employees, edit
       
     }
 
+    //When delete employee button is clicked
     function onDeleteEmployee(){
       if (window.confirm("Are you sure you want to delete employee: " + selectedEmployee.first_name + ' ' + selectedEmployee.last_name)){
         onDelete(selectedEmployee.emp_number, selectedEmployee.line_manager);

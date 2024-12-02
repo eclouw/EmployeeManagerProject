@@ -14,6 +14,7 @@ function EmployeeTree({employees, nodeClick}){
     }, [employees])
 
 
+    //Handle when the user clicks a node
     const handleNodeClick = (nodeData, e)=>{
         console.log("you clicked", nodeData);
         if (nodeClick){
@@ -27,6 +28,7 @@ function EmployeeTree({employees, nodeClick}){
 
     
 
+    //Create the custom nodes that are displayed in the tree
     const customNodes = ({nodeDatum, toggleNode})=>{
         const isToggled = !nodeDatum.__rd3t.collapsed;
         return(

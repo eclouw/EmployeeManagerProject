@@ -3,7 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import '../Components/UI/styles/styles.css'
 
-//Log the user in
+//Attempt to log the user in
 async function loginUser(details){
     try{
         const token = await axios.post(process.env.REACT_APP_BACKEND_URL + ':' + process.env.REACT_APP_BACKEND_PORT+'/login', details);

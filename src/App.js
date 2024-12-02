@@ -15,6 +15,7 @@ import useToken from './Components/useToken';
 function App() {
   const {token, setToken} = useToken();
   if (!token){
+    //If the user is not logged in, give them the log in page
     return <Login setToken={setToken}/>
   }
   

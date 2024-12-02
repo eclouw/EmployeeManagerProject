@@ -61,7 +61,7 @@ function EmployeeTable({data,  onSelection, roles}){
   }
 
   
-
+  //When the user selects an employee in the table
   function findSelectedEmployee(id){
     const employee = data.nodes.find((item)=>item.emp_number === id)
     if (onSelection){

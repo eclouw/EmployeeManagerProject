@@ -10,7 +10,6 @@ function EmployeeTreeRootCreator(employees){
         }
     }))
 
-    console.log('from root creator',mappedData);
     //Create an array that is compatible with d3 tree
     mappedData.forEach(employee => {
         if (employee.line_manager == null && employee.emp_number > 0){
@@ -28,17 +27,6 @@ function EmployeeTreeRootCreator(employees){
         children: root,
     }
 
-    
-
-
-    if (root.length > 1){
-        return{
-            name: "Organisation",
-            children: root,
-        }
-    }
-
-    return root;
 }
 
 export default EmployeeTreeRootCreator;

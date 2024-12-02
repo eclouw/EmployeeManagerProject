@@ -46,6 +46,7 @@ function EmployeesTableView(){
         fetchRoleData();
       }, [])
 
+      //Get employee data from backend
       const fetchEmployeeData = async()=>{
         setLoadingEmployeeData(true);
         const employees = await getData("employees");

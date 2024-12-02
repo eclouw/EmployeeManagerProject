@@ -8,9 +8,11 @@ const getData = async(table)=>{
 
     const data = async()=>{
         try{
+            //Get employee data
             if (table=="employees"){
                 const response = await fetchData(url+':'+port+"/get/employees");
                 return response;
+            //Get role data
             }else if (table=="roles"){
                 const response = await fetchData(url+':'+port+"/get/roles")
                 return response;

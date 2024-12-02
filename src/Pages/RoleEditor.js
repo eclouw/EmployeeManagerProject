@@ -23,12 +23,14 @@ function RoleEditor(){
         fetchRoleData();
     }, [])
 
+    //Get role data from the backend
     const fetchRoleData = async()=>{
         const roles = await getData("roles");
         console.log("roles", roles);
         setRoleData(roles);
     }
 
+    //UseEffect when roleData is altered
     useEffect(()=>{
         if (roleData.length > 0 && Array.isArray(roleData)){
             setEditedRoleData(roleData);
@@ -36,6 +38,7 @@ function RoleEditor(){
         }
     }, [roleData])
 
+    //Update role
     function updateRole(id){
         const updatedRole = editedRoleData.find((role)=> role.id === id);
         if (roleValidation(updatedRole.role_name, updatedRole.role_description, roleData, id, true)){
@@ -94,12 +97,12 @@ function RoleEditor(){
         const res = await sendData(data, "roles", 3);
         fetchRoleData();
     }
-
+    //Send new role data to the backend
     const sendNewRoleData = async(data)=>{
         const res = await sendData(data, "roles", 2);
         fetchRoleData();
     }
-
+    //Send edited role data to the backend
     const sendUpdatedRoleData= async(data)=>{
         const res = await sendData(data, "roles", 1);
         fetchRoleData();
