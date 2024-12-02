@@ -1,15 +1,20 @@
 import EmployeeTreeRootCreator from "./EmployeeTreeRootCreator";
-import React from 'react';
+import React, { useEffect } from 'react';
 import Tree from 'react-d3-tree';
 
 function EmployeeTree({employees, nodeClick}){
+    
+
     //Generate the TreeRoots
     const roots = EmployeeTreeRootCreator(employees);
 
     const handleNodeClick = (nodeData, e)=>{
         console.log("you clicked", nodeData);
         if (nodeClick){
-            nodeClick(nodeData);
+            if (nodeData.emp_number){
+                nodeClick(nodeData);
+            }
+            
         }
         
     }
@@ -46,7 +51,8 @@ function EmployeeTree({employees, nodeClick}){
             textAnchor="middle"
             fontSize={24}
             fontWeight={"normal"}
-            alignmentBaseline="middle" >
+                onClick={()=>handleNodeClick(nodeDatum)}
+                alignmentBaseline="middle" >
                 {nodeDatum.name}
             </text>
             {nodeDatum.role_name && (
@@ -55,7 +61,8 @@ function EmployeeTree({employees, nodeClick}){
                 fontSize={16}
                 fontWeight="normal"
                 alignmentBaseline="middle"
-                y={20}>
+                y={20}
+                onClick={()=>handleNodeClick(nodeDatum)}>
                     Role: {nodeDatum.role_name}
                 </text>
             )}
@@ -78,7 +85,8 @@ function EmployeeTree({employees, nodeClick}){
             <text fill="black"
             textAnchor="middle"
             fontSize={20}
-            alignmentBaseline="middle" >
+            alignmentBaseline="middle" 
+            onClick={()=>handleNodeClick(nodeDatum)}>
                 {nodeDatum.name}
             </text>
 
@@ -88,7 +96,8 @@ function EmployeeTree({employees, nodeClick}){
                 fontSize={16}
                 fontWeight="normal"
                 alignmentBaseline="middle"
-                y={20}>
+                y={20}
+                onClick={()=>handleNodeClick(nodeDatum)}>
                     Role: {nodeDatum.role_name}
                 </text>
             )}
@@ -100,14 +109,42 @@ function EmployeeTree({employees, nodeClick}){
         )
     }
         
-    
+    let filterTypes = [{
+        filter_label: 'First Name',
+        filter_value: 'first_name', 
+      },
+      {
+        filter_label: 'Last Name',
+        filter_value: 'last_name',
+      },
+      {
+        filter_label: 'Employee Number',
+        filter_value: 'emp_number',
+        
+      },
+      {
+        filter_label: 'Role',
+        filter_value: 'role_name',
+        
+      },
+      {
+        filter_label: 'Line Manager',
+        filter_value: 'manager_name',
+        
+      },
+  ]
 
     
     
     return(
         <>
+            
         
             <Tree data={roots} orientation="vertical" separation={{ siblings: 2, nonSiblings: 2 }} renderCustomNodeElement={customNodes} pathFunc="step"/>
+        
+
+        
+            
         
         </>
     )

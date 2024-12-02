@@ -1,5 +1,5 @@
 function EmployeeTreeRootCreator(employees){
-    
+    console.log(employees);
     const root = [];
     const mappedData = employees.map((employee)=>({
         ...employee,
