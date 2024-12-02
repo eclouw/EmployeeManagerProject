@@ -189,7 +189,7 @@ app.use('/login', async(req, res)=>{
         console.log(queryResult);
         if (queryResult.rows.length > 0){
             res.send({
-                token: 'test123',
+                token: 'loggedIn',
                 username: username,
             })
         }else{
