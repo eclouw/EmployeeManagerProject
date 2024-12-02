@@ -160,8 +160,8 @@ function EmployeesTableView(){
             <EmployeesTable data = {tableData} onSelection={getSelectedEmployee}/>
             </Tab>
             <Tab eventKey='tree-graph' title='Graph View'>
-              <div id="treeWrapper" style={{ width: '100%', height: '50em' }}>
-                <EmployeeTree employees={tableData.nodes}/>
+              <div id="treeWrapper" style={{ width: '100%', height: '30em' }}>
+                <EmployeeTree employees={tableData.nodes} nodeClick={getSelectedEmployee}/>
               </div>
             </Tab>
           </Tabs>
