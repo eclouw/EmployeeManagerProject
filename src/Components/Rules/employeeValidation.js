@@ -41,7 +41,17 @@ const employeeValidation = (employee, popup) =>{
     function validManager(manager, role){
         if (role.has_superior){
             if (manager){
-                return true;
+                if (employee.emp_number){
+                    console.log(employee.emp_number);
+                    if (employee.emp_number == manager){
+                        window.alert("Can not set line manager to itself");
+                        return false;
+                    }else{
+                        return true;
+                    }
+                }else{
+                    return true;
+                }
             }else{
                 window.alert("The selected role requires a line manager");
                 return false;
