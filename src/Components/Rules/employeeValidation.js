@@ -1,6 +1,5 @@
 
 //Handles employee validation as well as outputting a popup to the user explaining what is wrong if popup is set to true
-//TODO: IMPLEMENT POPUP
 const employeeValidation = (employee, popup) =>{
 
     //Ensure that the name is a string with length greater than 0 and less than 50 and does not contain numbers

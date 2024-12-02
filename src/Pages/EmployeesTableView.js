@@ -83,13 +83,21 @@ function EmployeesTableView(){
       
     }
 
-    
 
     //Update employee details
     function updateEmployeeDetails(first_name, last_name, email, newLineManager, salary, role, birthdate){
       const index = tableData.nodes.findIndex((item)=> item.id === selectedEmployee.id);
+
+
       
       let employees = [...tableData.nodes];
+
+      //Update line managers
+      employees.forEach(emp=>{
+        if (emp.line_manager == selectedEmployee.emp_number){
+          emp.line_manager = selectedEmployee.line_manager;
+        }
+      })
       
       let employee = {...employees[index]}
 
@@ -104,6 +112,7 @@ function EmployeesTableView(){
         raw_role: roleData.find((item)=> item.id == role),
         birthdate : birthdate,
       }
+
 
       //Ensure that the employee details are valid
       if (employeeValidation(editedEmployee, true)){
