@@ -37,25 +37,16 @@ app.get('/get/roles', async (request, result) => {
 
 //get all the employees from the database
 app.get('/get/employees', async (request, result) =>{
-    const newPgData = new Pool({
-        user: process.env.DB_USERNAME,
-        host: process.env.ENDPOINT,
-        database: process.env.DB_NAME,
-        password: process.env.PASSWORD,
-        port: 5432,
-    
-    }); 
+
     try {
         const query = "SELECT e.*,r.role_name, CONCAT(m.first_name, ' ', m.last_name) AS manager_name FROM public.employees e JOIN roles r ON e.emp_role=r.id LEFT JOIN employees m ON e.line_manager = m.emp_number";
-        const res = await newPgData.query(query);
+        const res = await pgData.query(query);
         console.log("Fetched Employees from database")
         console.log(res.rows.length);
         result.json(res.rows);
     }catch (error) {
         console.error('Error executng query:', error);
         result.status(500).json({error: 'Error with query'});
-    }finally{
-        await newPgData.end();
     }
 })
 
@@ -77,7 +68,7 @@ app.post('/api/employee/edit/submit', async (req, res)=>{
         res.json({message: 'Employee Updated', recievedData: req.body});
     }catch (error) {
         console.error('Error executng query:', error);
-        result.status(500).json({error: 'Error with query'});
+        res.status(500).json({error: 'Error with query'});
     }
 })
 
@@ -117,7 +108,7 @@ app.post('/api/employee/create/submit', async (req, res)=>{
                 res.json({message: 'Employee Created', recievedData: req.body});
             }catch(error){
                 console.error('Error executng query:', error);
-                result.status(500).json({error: 'Error with query'});
+                res.status(500).json({error: 'Error with query'});
             }
             
         }else{
@@ -128,7 +119,7 @@ app.post('/api/employee/create/submit', async (req, res)=>{
             res.json({message: 'Employee Created', recievedData: req.body});
             }catch(error){
                 console.error('Error executng query:', error);
-                result.status(500).json({error: 'Error with query'});
+                res.status(500).json({error: 'Error with query'});
             }
             
         }
@@ -165,7 +156,7 @@ app.post('/api/role/create/submit', async (req, res)=>{
         res.json({message: 'Role Created', recievedData: req.body});
     }catch(error){
         console.error('Error executng query:', error);
-        result.status(500).json({error: 'Error with query'});
+        res.status(500).json({error: 'Error with query'});
     }
 })
 
@@ -186,7 +177,7 @@ app.post('/api/role/delete/submit', async(req, res)=>{
         res.json({message: 'Role Deleted', recievedData: req.body});
     }catch(error){
         console.error('Error executng query:', error);
-        result.status(500).json({error: 'Error with query'});
+        res.status(500).json({error: 'Error with query'});
     }
 })
 

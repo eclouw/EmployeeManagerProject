@@ -7,12 +7,16 @@ const getData = async(table)=>{
     const port=process.env.REACT_APP_BACKEND_PORT;
 
     const data = async()=>{
-        if (table=="employees"){
-            const response = await fetchData(url+':'+port+"/get/employees");
-            return response;
-        }else if (table=="roles"){
-            const response = await fetchData(url+':'+port+"/get/roles")
-            return response;
+        try{
+            if (table=="employees"){
+                const response = await fetchData(url+':'+port+"/get/employees");
+                return response;
+            }else if (table=="roles"){
+                const response = await fetchData(url+':'+port+"/get/roles")
+                return response;
+            }
+        }catch(error){
+            console.log(error);
         }
     }
 
