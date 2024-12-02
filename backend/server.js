@@ -190,6 +190,24 @@ app.post('/api/role/delete/submit', async(req, res)=>{
     }
 })
 
+app.use('/login', async(req, res)=>{
+    const {username, password} = req.body;
+    const query = "SELECT username from public.accounts WHERE username = $1 AND userpassword = $2";
+    
+        const queryResult = await pgData.query(query, [username, password]);
+        console.log(queryResult);
+        if (queryResult.rows.length > 0){
+            res.send({
+                token: 'test123',
+                username: username,
+            })
+        }else{
+            res.status(500).json({error: 'No user found'});
+        }
+    
+    
+})
+
 
 
 //start server
