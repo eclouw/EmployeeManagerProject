@@ -139,7 +139,7 @@ function RoleEditor(){
                                 <Row>
                                     {role.unassigned ? (
                                         <>
-                                        <b>This role is a special role and only the description may be edited. Employees that do not have a role are assigned this role.</b>
+                                        <b>This role is a special role and may not be edited. Employees that do not have a role are assigned this role.</b>
                                         </>
                                     ): role.has_superior==false ? (
                                         <>
