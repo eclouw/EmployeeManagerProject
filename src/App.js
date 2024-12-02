@@ -6,15 +6,26 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import HomePage from './Pages/HomePage';
 import NavBar from './Components/UI/NavBar';
 import RoleEditor from './Pages/RoleEditor';
+import Login from './Pages/Login';
+import { useState } from 'react';
+import useToken from './Components/useToken';
+
+
 
 function App() {
+  const {token, setToken} = useToken();
+  if (!token){
+    return <Login setToken={setToken}/>
+  }
+  
   return (
     <>
     <BrowserRouter>
     <NavBar/>
-    <div class="container">
+    <div className="container">
       <Routes>
-      <Route path="/" element={<HomePage/>}/>
+      <Route path="/" element={<HomePage token={token}/>}/>
+      <Route path="/login" element={<Login/>}/>
         <Route path="/edit/Employee" element={<EmployeesTableView/>}/>
         <Route path="/create/Employee" element={<EmployeeCreator/>}/>
         <Route path="/edit/Roles" element={<RoleEditor/>}/>

@@ -138,7 +138,6 @@ function EmployeeTable({data,  onSelection, roles}){
 
     function filterTable(){
       
-      console.log('filter');
       setFilterItem(document.getElementById('filter_select').value)
       console.log(filterItem);
       console.log(filteredData);
