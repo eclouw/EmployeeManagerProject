@@ -10,9 +10,7 @@ const PORT = 5000;
 require('dotenv').config();
 
 app.use(cors({
-    origin: function (origin, callback){
-        callback(null, true);
-    },
+    origin: process.env.FRONTEND_URL,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: false
 }));
