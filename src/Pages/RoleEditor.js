@@ -26,8 +26,11 @@ function RoleEditor(){
     //Get role data from the backend
     const fetchRoleData = async()=>{
         const roles = await getData("roles");
-        console.log("roles", roles);
-        setRoleData(roles);
+        const mappedRoles = roles.map((role)=>({
+            ...role,
+            original_name: role.role_name
+        }))
+        setRoleData(mappedRoles);
     }
 
     //UseEffect when roleData is altered
@@ -135,9 +138,9 @@ function RoleEditor(){
                             
                         </Accordion.Body>
                     </Accordion.Item>
-                    {editedRoleData.map((role)=> role.role_name.toLowerCase().includes(filterText.toLowerCase()) &&(
+                    {editedRoleData.map((role)=> role.original_name.toLowerCase().includes(filterText.toLowerCase()) &&(
                         <Accordion.Item eventKey={role.id}>
-                            <Accordion.Header>{role.role_name}</Accordion.Header>
+                            <Accordion.Header>{role.original_name}</Accordion.Header>
                             <Accordion.Body>
                                 <Row>
                                     {role.unassigned ? (
