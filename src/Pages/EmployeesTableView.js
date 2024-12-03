@@ -94,11 +94,14 @@ function EmployeesTableView(){
       let employees = [...tableData.nodes];
 
       //Update line managers
-      employees.forEach(emp=>{
-        if (emp.line_manager == selectedEmployee.emp_number){
-          emp.line_manager = selectedEmployee.line_manager;
-        }
-      })
+      if (newLineManager.emp_number != selectedEmployee.line_manager){
+        employees.forEach(emp=>{
+          if (emp.line_manager == selectedEmployee.emp_number){
+            emp.line_manager = selectedEmployee.line_manager;
+          }
+        })
+      }
+      
       
       let employee = {...employees[index]}
 
@@ -112,6 +115,7 @@ function EmployeesTableView(){
         emp_role: role,
         raw_role: roleData.find((item)=> item.id == role),
         birthdate : birthdate,
+        label: first_name + ' ' + last_name
       }
 
 

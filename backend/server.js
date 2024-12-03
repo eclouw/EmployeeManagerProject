@@ -10,9 +10,11 @@ const PORT = 5000;
 require('dotenv').config();
 
 app.use(cors({
-    origin: process.env.FRONTEND_URL,
+    origin: function (origin, callback){
+        callback(null, true);
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true
+    credentials: false
 }));
 app.use(bodyParser.json());
 
@@ -55,15 +57,15 @@ app.get('/get/employees', async (request, result) =>{
 })
 
 
-//Update employee first name, last name, and email
+//Update employee details
 app.post('/api/employee/edit/submit', async (req, res)=>{
     console.log('Got data');
     const {first_name, last_name, email, emp_number, emp_role, line_manager, salary, birthdate} = req.body;
     console.log('Receieved first name:', first_name)
     console.log('Recieved last name', last_name)
     //First update the employees that this employee manages so that they get the line manager of the employee being edited
-    const upQuery = "UPDATE public.employees SET line_manager = (SELECT line_manager FROM public.employees WHERE emp_number = $1) WHERE line_manager = $1"
-    const upQueryResult = await pgData.query(upQuery, [emp_number]);
+    const upQuery = "UPDATE public.employees SET line_manager = CASE WHEN (SELECT line_manager FROM public.employees WHERE emp_number =$1) <> $2 THEN (SELECT line_manager FROM public.employees WHERE emp_number = $1) ELSE line_manager END WHERE line_manager=$1"
+    const upQueryResult = await pgData.query(upQuery, [emp_number, line_manager]);
     console.log(upQueryResult);
     
 

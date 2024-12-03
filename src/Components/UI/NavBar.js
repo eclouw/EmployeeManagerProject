@@ -19,7 +19,7 @@ function NavBar(){
     return(
         <>
         <div className="navbar">
-            <h1>eclouw</h1>
+            <h1>EUTIAECL</h1>
             <nav>
                 <ul>
                     <li><Link to ="/"><Button variant="link" className="button-nav">Home</Button></Link></li>
