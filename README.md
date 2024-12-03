@@ -10,6 +10,3 @@ The backend source code is in the backend folder in the main directory
 <h2>Documets</h2>
 A user manual and technical document is available under the Documents folder in the main directory
 
-<h2>Hosting</h2>
-The web application is hosted on:
-https://staging.d2cwu4vvc3j5ld.amplifyapp.com/
