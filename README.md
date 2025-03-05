@@ -1,5 +1,5 @@
-<h1>EPI-USE Technical Assessment</h1>
-This repository contains the source code for the frontend and backend created for the EPI-USE Technical Assessment
+<h1>Employee Management Project</h1>
+This repository contains the source code for the frontend and backend created for the managing employee data stored in a database.
 
 <h2>Frontend Source Code</h2>
 The frontend source code is in the src folder in the main directory
